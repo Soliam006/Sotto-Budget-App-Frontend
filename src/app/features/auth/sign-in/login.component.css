@@ -1,0 +1,8 @@
+.bg-errors{
+  background-color: #f8d7da;
+  color: #841721;
+  padding: 2px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
