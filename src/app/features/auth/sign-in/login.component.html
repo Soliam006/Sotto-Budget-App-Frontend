@@ -16,9 +16,7 @@ flex items-center justify-center px-4 py-8">
              class="w-full pl-10 pr-4 py-3 bg-white/10 border
              border-blue-200/20 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent
              text-white placeholder-blue-200" placeholder="Email or Username">
-      <!--Error de emailOrUsername
-      <span *ngIf="loginForm.get('emailOrUsername')?.invalid && loginForm.get('emailOrUsername')?.touched"
-            class="bg-errors">Email or Username is required</span>-->
+      <!--Error de emailOrUsername-->
       <div *ngIf="loginForm.get('emailOrUsername')?.errors && loginForm.get('emailOrUsername')?.touched">
         <span class="bg-errors" *ngIf="loginForm.get('emailOrUsername')?.errors?.['usernameLength']">
             {{ loginForm.get('emailOrUsername')?.errors?.['usernameLength'] }}
@@ -26,7 +24,6 @@ flex items-center justify-center px-4 py-8">
         <span class="bg-errors" *ngIf="loginForm.get('emailOrUsername')?.errors?.['emailFormat']">
             {{ loginForm.get('emailOrUsername')?.errors?.['emailFormat'] }}
           </span>
-        <!--Required error-->
         <span class="bg-errors" *ngIf="loginForm.get('emailOrUsername')?.errors?.['required']">
           Email or Username is required
         </span>

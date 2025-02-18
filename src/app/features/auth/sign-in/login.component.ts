@@ -26,7 +26,10 @@ export class LoginComponent {
     const formValue = this.loginForm.value;
     // Enviar formValue al servidor
     // Si rememberMe es true, guardar el token en el almacenamiento local o en las cookies
-
-    alert('Formulario enviado');
+    if (this.loginForm.valid) {
+      console.log('Formulario enviado', this.loginForm.value);
+    } else {
+      console.log('Formulario inválido');
+    }
   }
 }
