@@ -6,3 +6,9 @@
   border: 1px solid #f5c6cb;
   border-radius: 5px;
 }
+
+.bar-horizontal {
+  background: white;
+  height: 1px;
+  flex-grow: 1;
+}

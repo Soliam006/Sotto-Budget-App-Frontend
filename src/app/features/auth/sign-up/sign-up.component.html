@@ -1,4 +1,5 @@
-<body class="min-h-screen w-full bg-gradient-to-br from-blue-950 via-black-600 to-blue-200 flex items-center justify-center px-4 py-8">
+<body
+  class="min-h-screen w-full bg-gradient-to-br from-blue-950 via-black-600 to-blue-400 flex items-center justify-center px-4 py-8">
 <div class="w-full max-w-md bg-white/10 rounded-2xl shadow-2xl overflow-hidden">
   <div class="w-full max-w-md p-8 flex flex-col justify-center">
     <div class="text-center mb-8">
@@ -6,38 +7,110 @@
       <p class="text-blue-100">Create an account to manage your finances</p>
     </div>
 
-    <form class="space-y-6">
-      <div class="relative">
-        <mat-icon
-                  class="absolute left-3 transform -translate-y-1/2 text-blue-400 top-1/2">person</mat-icon>
-        <input type="text" id="username" class="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Username">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div class="relative mb-2">
+        <mat-icon [ngClass]="{'top-1/3': signUpForm.get('username')?.errors && signUpForm.get('username')?.touched,
+        'top-1/2': !(signUpForm.get('username')?.errors && signUpForm.get('username')?.touched)}"
+                  class="absolute left-3 transform -translate-y-1/2 text-blue-400 top-1/2">person
+        </mat-icon>
+        <input type="text" id="username" formControlName="username"
+               class="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2
+               focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Username">
+        <!--Error de username-->
+        <div *ngIf="signUpForm.get('username')?.errors && signUpForm.get('username')?.touched">
+          <span class="bg-errors" *ngIf="signUpForm.get('username')?.errors?.['required']">
+            Username is required
+          </span>
+          <span class="bg-errors" *ngIf="signUpForm.get('username')?.errors?.['minlength']">
+            Username must be at least 3 characters
+          </span>
+        </div>
+        <div *ngIf="signUpForm.get('username')?.errors">
+          <span class="bg-errors" *ngIf="signUpForm.get('username')?.errors?.['maxlength']">
+            Username must be at most 25 characters
+          </span>
+        </div>
       </div>
 
-      <div class="relative">
-        <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400"></i>
-        <input type="email" id="email" class="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Email">
+      <div class="relative mb-2">
+        <mat-icon [ngClass]="{'top-1/3': signUpForm.get('email')?.errors && signUpForm.get('email')?.touched,
+        'top-1/2': !(signUpForm.get('email')?.errors&& signUpForm.get('email')?.touched)}"
+                  class="absolute left-3 transform -translate-y-1/2 text-blue-400">email
+        </mat-icon>
+        <input type="email" id="email" formControlName="email"
+               class="w-full pl-10 pr-4 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2
+               focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Email">
+        <!--Error de email-->
+        <div *ngIf="signUpForm.get('email')?.errors && signUpForm.get('email')?.touched">
+          <span class="bg-errors" *ngIf="signUpForm.get('email')?.errors?.['email']">
+            El formato del email no es válido
+          </span>
+          <span class="bg-errors" *ngIf="signUpForm.get('email')?.errors?.['required']">
+            Email is required
+          </span>
+        </div>
       </div>
 
-      <div class="relative">
-        <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400"></i>
-        <input type="password" id="password" class="w-full pl-10 pr-12 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Password">
+      <div class="relative mb-2">
+        <mat-icon [ngClass]="{'top-1/3': signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched,
+  'top-1/2': !(signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched)}"
+                  class="absolute left-3 transform -translate-y-1/2 text-blue-400">lock
+        </mat-icon>
+        <input type="password" id="password" formControlName="password" (input)="onPasswordInput()"
+               class="w-full pl-10 pr-12 py-3 bg-white/10 border border-blue-200/20 rounded-lg focus:ring-2
+               focus:ring-blue-400 focus:border-transparent text-white placeholder-blue-200" placeholder="Password"
+               pattern="^\S*$">
+
+        <div *ngIf="signUpForm.get('password')?.errors && signUpForm.get('password')?.touched" class="bg-errors">
+          <span *ngIf="signUpForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="signUpForm.get('password')?.errors?.['pattern']">No whitespaces allowed</span>
+          <span *ngIf="signUpForm.get('password')?.errors?.['minlength']">Password must be at least 4 characters</span>
+        </div>
+      </div>
+      <div class="relative mb-2" *ngIf="signUpForm.get('password')?.value" @fadeInOut>
+        <div class="password-strength mb-1" [ngClass]="getStrengthColor()"
+             [style.width.%]="passwordStrength > 100 ? 100 : passwordStrength"></div>
+        <ul class="space-y-1 text-sm">
+          <li class="flex items-center gap-2">
+            <span [ngClass]="isValidPassword('8LE')">✔</span>
+            <p [ngClass]="isValidTextColor('8LE')">
+              Mínimo 8 caracteres
+            </p>
+          </li>
+          <li class="flex items-center gap-2">
+            <span [ngClass]="isValidPassword('MAS')">✔</span>
+            <p [ngClass]="isValidTextColor('MAS')">
+              Al menos una mayúscula
+            </p>
+          </li>
+          <li class="flex items-center gap-2">
+            <span [ngClass]="isValidPassword('NUM')">✔</span>
+            <p [ngClass]="isValidTextColor('NUM')">
+              Al menos un número
+            </p>
+          </li>
+          <li class="flex items-center gap-2">
+            <span [ngClass]="isValidPassword('ESP')">✔</span>
+            <p [ngClass]="isValidTextColor('ESP')">
+              Al menos un carácter especial
+            </p>
+          </li>
+        </ul>
       </div>
 
-      <div class="flex items-center justify-between">
-        <label class="flex items-center text-sm text-blue-100">
-          <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-500 rounded focus:ring-blue-400 border-blue-200/20 bg-white/10">
-          <span class="ml-2">I agree to the terms and conditions</span>
-        </label>
-      </div>
-
-      <button type="submit" class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
+      <button type="submit" class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white
+      rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 mb-6">
         <span>Sign Up</span>
       </button>
-
-      <div class="mt-6 text-center">
-        <p class="text-blue-100">Already have an account?
-          <a routerLink="/sign-in" class="text-blue-700 hover:text-white">Sign in</a></p>
+      <div class="text-center flex items-center mb-1">
+        <p class="bar-horizontal mx-1"></p>
+        <p class="text-blue-100">Already have an account? </p>
+        <p class="bar-horizontal mx-1"></p>
       </div>
+      <button class="w-full py-3 bg-gray-500 hover:bg-blue-800 text-white rounded-lg font-medium
+      transition-colors flex items-center justify-center" routerLink="/sign-in">
+        <span>Sign In</span>
+      </button>
     </form>
   </div>
 </div>

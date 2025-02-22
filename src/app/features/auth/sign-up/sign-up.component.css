@@ -1,0 +1,89 @@
+/* signup.component.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0);
+}
+
+.form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-group button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.password-strength {
+  height: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.password-strength {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  margin-top: 5px;
+  overflow: hidden;
+
+  .strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease-in-out;
+  }
+}
+
+.bg-errors{
+  background-color: #f8d7da;
+  color: #841721;
+  padding: 2px;
+  margin-bottom: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+.bar-horizontal {
+  background: white;
+  height: 1px;
+  flex-grow: 1;
+}
+
