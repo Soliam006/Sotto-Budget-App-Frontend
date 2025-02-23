@@ -1,0 +1,26 @@
+.active {
+  background-color: #1f2937; /* Color de fondo cuando está activo */
+  font-weight: bold;
+}
+
+.home mat-icon{
+  color: #499dda;
+}
+.tasks mat-icon{
+  color: #962fec;
+}
+.calendar mat-icon{
+  color: #d9208f;
+}
+.materials mat-icon{
+  color: #e1521d;
+}
+.team mat-icon{
+  color: #66cc99;
+}
+.reports mat-icon{
+  color: #177509;
+}
+.profile mat-icon{
+  color: #778bec;
+}

@@ -1,0 +1,47 @@
+<div class="flex flex-row bg-gray-800 w-full h-screen ">
+<div class="h-screen w-64 bg-gray-900 text-white flex flex-col p-4">
+  <img src="sb_logo.png" alt="Logo" class=" w-full h-20 rounded-full mx-auto mb-6">
+
+  <nav class="space-y-2">
+    <a routerLink="dashboard" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition" routerLinkActive="active">
+      <div class="home"><mat-icon class="mr-3">home</mat-icon> </div>
+      <span>Dashboard</span>
+    </a>
+
+    <a routerLink="tasks" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+      <div class="tasks"><mat-icon class="mr-3">assignment</mat-icon></div>
+      <span>Tareas</span>
+    </a>
+
+    <a routerLink="calendar" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+      <div class="calendar"><mat-icon class="mr-3">calendar_today</mat-icon></div>
+      <span>Calendario</span>
+    </a>
+
+    <a routerLink="materials" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+      <div class="materials"><mat-icon class="mr-3">inventory_2</mat-icon></div>
+      <span>Materiales</span>
+    </a>
+
+    <a routerLink="team" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+      <div class="team"><mat-icon class="mr-3">groups</mat-icon></div>
+      <span>Equipo</span>
+    </a>
+
+    <a routerLink="reports" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+        <div class="reports"><mat-icon class="mr-3">description</mat-icon></div>
+      <span>Reportes</span>
+    </a>
+
+    <a routerLink="profile" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+        <div class="profile"><mat-icon class="mr-3">account_circle</mat-icon></div>
+      <span>Profile</span>
+    </a>
+  </nav>
+</div>
+  <div>
+    <main class="w-full p-10">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

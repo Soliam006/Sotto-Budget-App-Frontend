@@ -55,4 +55,27 @@ export class AuthValidators {
       return null;
     };
   }
+
+  static passwordStrength(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      // No contar espacion en blanco
+      if (value && value.includes(' ')) {
+        return { passwordSpaces: 'El password no puede contener espacios en blanco' };
+      }
+
+      if (!value) {
+        return { required: true };
+      }
+
+      if (value.length < 4) {
+        return { passwordLength: 'El password debe tener al menos 4 caracteres' };
+      }
+
+      return null;
+    };
+  }
+
+
 }

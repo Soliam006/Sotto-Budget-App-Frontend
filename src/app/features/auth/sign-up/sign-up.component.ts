@@ -1,27 +1,28 @@
-import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Component} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
-import {single} from 'rxjs';
-import { trigger, transition, style, animate } from '@angular/animations';
+import {Router, RouterLink} from '@angular/router';
+import {trigger, transition, style, animate} from '@angular/animations';
+import {AuthValidators} from '../../../shared/validators/auth-validators';
+import {AuthService} from '../../../shared/services/auth-service/auth-service.service';
 
 @Component({
   selector: 'app-sign-up',
   imports: [
-    RouterLink, MatIcon, CommonModule, ReactiveFormsModule
+    MatIcon, CommonModule, ReactiveFormsModule, RouterLink
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(-10px)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        style({opacity: 0, transform: 'translateY(-10px)'}),
+        animate('300ms ease-out', style({opacity: 1, transform: 'translateY(0)'}))
       ]),
       transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
+        animate('200ms ease-in', style({opacity: 0, transform: 'translateY(-10px)'}))
       ])
     ])
   ]
@@ -33,11 +34,15 @@ export class SignUpComponent {
   passwordStrength: number = 5;
   isShaking: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required, Validators.maxLength(25), Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.minLength(4)]
+      password: ['', AuthValidators.passwordStrength()]
     });
   }
 
@@ -51,13 +56,11 @@ export class SignUpComponent {
     if (/[A-Z]/.test(password)) strength += 25;
     if (/[0-9]/.test(password)) strength += 25;
     if (/[^A-Za-z0-9]/.test(password)) strength += 25;
-    console.log("STR", strength);
     return strength;
   }
 
   onPasswordInput() {
     const password = this.signUpForm.get('password')?.value || '';
-    console.log("PAS", password);
     this.passwordStrength = this.getPasswordStrength(password);
   }
 
@@ -97,13 +100,25 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    if (this.passwordStrength < 75) {
-      this.isShaking = true;
-      setTimeout(() => this.isShaking = false, 650);
+    if (this.signUpForm.invalid) {
+      this.signUpForm.markAllAsTouched(); // Marca todos los campos como "tocados"
       return;
     }
-    alert('Formulario enviado correctamente');
+
+    // Enviar formulario al servidor
+    console.log('Formulario enviado', this.signUpForm.value);
+    this.authService.register(this.signUpForm.value).subscribe({
+      next: response => {
+        console.log('Respuesta del servidor', response);
+        // Redirigir al usuario a la página de inicio de sesión
+        this.router.navigate(['/sign-in'], {
+          queryParams: {username: this.signUpForm.get('username')?.value}
+        });
+      },
+      error: error => {
+        console.error('Error en la petición', error);
+      }
+    });
   }
 
-  protected readonly single = single;
 }

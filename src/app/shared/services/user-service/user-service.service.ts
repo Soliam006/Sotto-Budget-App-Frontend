@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,13 @@ export class UserServiceService {
   user$ = new BehaviorSubject<User |null>(null);
   user= this.user$.asObservable();
 
+  token: string | null = null;
+
   constructor() { }
+
+  setToken(token: string): void {
+    this.token = token;
+  }
 
 
   // Set the user
