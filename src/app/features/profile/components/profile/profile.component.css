@@ -1,0 +1,152 @@
+/* Estilos para el componente de perfil */
+.flex-1 {
+  flex: 1;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.md\:grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+
+.profile {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 300px;
+  margin: auto;
+}
+
+h1 {
+  color: #333;
+}
+
+h2 {
+  color: #666;
+}
+
+p {
+  color: #999;
+}
+::ng-deep mat-tab-group {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+::ng-deep mat-tab-body-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+::ng-deep mat-tab-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .mat-tab-group {
+  height: 100%;
+}
+
+::ng-deep .mat-tab-body-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-principal{
+  color: #959abb;
+  background: #7a0227;
+}
+.role:hover{
+  background: #3d47a1;
+}

@@ -1,2 +1,152 @@
-<h2>Dashboard</h2>
-<p>Bienvenido al dashboard......................................................................................................................................................................................</p>
+<!-- dashboard.component.html -->
+<div class="flex min-h-screen bg-background">
+  <div class="flex-1 space-y-6 p-8">
+    <!-- Cards de estadísticas -->
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Card de Avance Total -->
+      <mat-card>
+        <mat-card-header class="flex flex-row items-center justify-between pb-2 space-y-0">
+          <mat-card-title class="text-sm font-medium">Avance Total</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="text-2xl font-bold">%</div>
+          <mat-progress-bar [value]="" class="mt-2"></mat-progress-bar>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Card de Presupuesto Utilizado -->
+      <mat-card>
+        <mat-card-header class="flex flex-row items-center justify-between pb-2 space-y-0">
+          <mat-card-title class="text-sm font-medium">Presupuesto Utilizado</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="text-2xl font-bold">A</div>
+          <mat-progress-bar [value]="" class="mt-2"></mat-progress-bar>
+          <p class="text-xs text-muted-foreground mt-2">de AAA</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    @defer {
+    <!-- Gráficos -->
+    <div class="grid gap-6 md:grid-cols-2">
+      <!-- Gráfico de Barras (Estado de Tareas) -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Estado de Tareas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="h-[200px]">
+            <ngx-charts-bar-vertical
+              [view]="[100, 200]"
+              [results]=""
+              [xAxis]="true"
+              [yAxis]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Estado'"
+              [yAxisLabel]="'Cantidad'"
+              [gradient]="false"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Gráfico de Torta (Distribución de Tareas) -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Distribución de Tareas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="h-[200px]">
+            <ngx-charts-pie-chart
+              [view]="[100, 200]"
+              [results]=""
+              [labels]="true"
+              [doughnut]="false"
+              [legend]="false"
+            >
+            </ngx-charts-pie-chart>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    }
+    @defer {
+    <!-- Tablero de Tareas (Drag and Drop) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Columna: Por Hacer -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+          <h3 class="font-semibold" matBadge="{{ tasks.todo.length }}"
+          >Por hacer</h3>
+        </div>
+        <div cdkDropList (cdkDropListDropped)="onDragEnd($event)" class="bg-muted/50 p-4 rounded-lg min-h-[500px]">
+          <div *ngFor="let task of tasks.todo; let i = index" cdkDrag>
+            <mat-card class="cursor-pointer hover:shadow-md transition-shadow" (click)="openTaskDetails(task)">
+              <mat-card-content class="p-4">
+                <div class="space-y-3">
+                  <div class="font-medium">{{ task.title }}</div>
+                  <div class="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <img [src]="task.assignee.avatar" alt="Avatar" class="h-6 w-6 rounded-full">
+                    <span>{{ task.assignee.name }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna: En Progreso -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <h3 class="font-semibold" matBadge="{{ tasks.inProgress.length }}">En progreso</h3>
+        </div>
+        <div cdkDropList (cdkDropListDropped)="onDragEnd($event)" class="bg-muted/50 p-4 rounded-lg min-h-[500px]">
+          <div *ngFor="let task of tasks.inProgress; let i = index" cdkDrag>
+            <mat-card class="cursor-pointer hover:shadow-md transition-shadow" (click)="openTaskDetails(task)">
+              <mat-card-content class="p-4">
+                <div class="space-y-3">
+                  <div class="font-medium">{{ task.title }}</div>
+                  <div class="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <img [src]="task.assignee.avatar" alt="Avatar" class="h-6 w-6 rounded-full">
+                    <span>{{ task.assignee.name }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna: Completado -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <h3 class="font-semibold" matBadge="{{ tasks.done.length }}"
+          >Completado</h3>
+        </div>
+        <div cdkDropList (cdkDropListDropped)="onDragEnd($event)" class="bg-muted/50 p-4 rounded-lg min-h-[500px]">
+          <div *ngFor="let task of tasks.done; let i = index" cdkDrag>
+            <mat-card class="cursor-pointer hover:shadow-md transition-shadow" (click)="openTaskDetails(task)">
+              <mat-card-content class="p-4">
+                <div class="space-y-3">
+                  <div class="font-medium">{{ task.title }}</div>
+                  <div class="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <img [src]="task.assignee.avatar" alt="Avatar" class="h-6 w-6 rounded-full">
+                    <span>{{ task.assignee.name }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

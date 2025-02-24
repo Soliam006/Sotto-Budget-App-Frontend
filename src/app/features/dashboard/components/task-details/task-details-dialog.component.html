@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <p>{{ data.description }}</p>
+  <h4>Asignado a</h4>
+  <div>
+    <img [src]="data.assignee.avatar" alt="Assignee Avatar">
+    <span>{{ data.assignee.name }}</span>
+  </div>
+  <h4>Fecha límite</h4>
+  <p>{{ data.dueDate }}</p>
+  <h4>Materiales</h4>
+  <ul>
+    <li *ngFor="let material of data.materials">
+      {{ material.name }} - ${{ material.price }}
+    </li>
+  </ul>
+  <p>Total: ${{ getTotalCost(data.materials) }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

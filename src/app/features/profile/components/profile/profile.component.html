@@ -1,2 +1,119 @@
-<h2>Profile</h2>
-<p>Información del perfil.</p>
+<div class="flex-1 p-8 pt-6 h-screen w-full">
+  <div class="flex items-center justify-between">
+    <h2 class="dir-title">Configuración</h2>
+  </div>
+  <div class="w-full h-full">
+    <mat-tab-group class="w-full h-full">
+      <!-- Pestaña de Perfil -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon" style="color:white">person</mat-icon>
+          <p class="tab-principal">Perfil</p>
+        </ng-template>
+        <div class="w-full h-full">
+            <div class="bg-gray-900 text-white rounded-lg flex items-center gap-4 p-4">
+              <img src="/sb_logo.png" alt="Avatar" class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center">
+              <div>
+                <div class="flex items-center gap-4">
+                  <h2 class="text-xl font-bold">Juan Díaz</h2>
+                  <span class="text-blue-500 bg-blue-950 hover:bg-gray-900  text-xs px-2 py-1 rounded-lg">Project Manager</span>
+                </div>
+
+                <p class="mt-2 text-gray-400">Especialista en gestión de proyectos de reforma con más de 8 años de experiencia</p>
+                <div class="mt-4 flex space-x-4">
+                  <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Edit Profile</button>
+                  <button class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Budget Limit</button>
+                </div>
+              </div>
+            </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>mail</mat-icon>
+                    <span>juan.doe&#64;example.com</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>phone</mat-icon>
+                    <span>+34 600 000 000</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>location_on</mat-icon>
+                    <span>Madrid, España</span>
+                  </div>
+                </div>
+                <div class="space-y-4">
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>person</mat-icon>
+                    <span>Miembro desde Enero 2024</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>15 proyectos completados</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon>schedule</mat-icon>
+                    <span>40 horas/semana</span>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </mat-tab>
+
+      <!-- Pestaña de Notificaciones -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon" style="color:white">notifications</mat-icon>
+          <p class="tab-principal">Notificaciones</p>
+        </ng-template>
+        <div class="w-full h-full">
+          <mat-card class="h-full">
+            <mat-card-header>
+              <mat-card-title>Notificaciones</mat-card-title>
+              <mat-card-subtitle>
+                Tienes {{getNotReaded()}}
+                notificaciones sin leer
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="space-y-4 w-full">
+              <div *ngFor="let notification of notifications" class="flex items-start gap-4 p-4 rounded-lg" [ngClass]="{'bg-gray-800': !notification.read}">
+                <mat-icon>notifications</mat-icon>
+                <div class="flex-1 space-y-1">
+                  <p class="font-medium leading-none">{{ notification.title }}</p>
+                  <p class="text-sm text-gray-500">{{ notification.description }}</p>
+                  <p class="text-xs text-gray-400">{{ notification.time }}</p>
+                </div>
+                <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Pestaña de Actividad -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon" style="color:white">event</mat-icon>
+          <p class="tab-principal">Actividad</p>
+        </ng-template>
+        <div class="w-full h-full">
+          <mat-card class="h-full">
+            <mat-card-header>
+              <mat-card-title>Actividad Reciente</mat-card-title>
+              <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="space-y-4 w-full">
+              <div *ngFor="let activity of activities" class="flex items-start gap-4 p-4">
+                <mat-icon>event</mat-icon>
+                <div class="flex-1 space-y-1">
+                  <p class="font-medium leading-none">{{ activity.action }}</p>
+                  <p class="text-sm text-gray-500">{{ activity.description }}</p>
+                  <p class="text-xs text-gray-400">{{ activity.time }}</p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
