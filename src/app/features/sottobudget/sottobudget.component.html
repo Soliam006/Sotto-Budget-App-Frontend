@@ -7,7 +7,8 @@
   </button>
 
   <!-- Sidebar -->
-<div [ngClass]="{'block': sidebarOpen, 'slide-in': sidebarOpen, 'slide-out': !sidebarOpen}"
+<div [ngClass]="{ 'hidden': !sidebarOpen,
+'block': sidebarOpen, 'slide-in': sidebarOpen}"
      class="h-full w-64 bg-gray-900 text-white flex flex-col p-4 overflow-y-auto fixed md:relative md:block z-30">
 
     <img src="sb_logo.png" alt="Logo" class="w-full h-20 rounded-full mx-auto mb-6">
