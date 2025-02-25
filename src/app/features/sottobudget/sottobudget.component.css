@@ -26,3 +26,28 @@
 .profile mat-icon{
   color: #778bec;
 }
+/*ANIMACION SideBar--------*/
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.slide-in {
+  animation: slideIn 0.3s forwards;
+}
+/*ANIMACION SideBar Salir--------*/
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.slide-out {
+  animation: slideOut 0.3s forwards;
+}
+/*------------------------------*/
