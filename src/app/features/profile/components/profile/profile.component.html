@@ -1,119 +1,103 @@
-<div class="flex-1 p-8 pt-6 h-screen w-full">
+<div class="flex-1 p-8 pt-6 h-screen w-full overflow-hidden flex flex-col">
   <div class="flex items-center justify-between">
-    <h2 class="dir-title">Configuración</h2>
+    <h2 class="dir-title text-white">Configuración</h2>
   </div>
-  <div class="w-full h-full">
-    <mat-tab-group class="w-full h-full">
-      <!-- Pestaña de Perfil -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="example-tab-icon" style="color:white">person</mat-icon>
-          <p class="tab-principal">Perfil</p>
-        </ng-template>
-        <div class="w-full h-full">
-            <div class="bg-gray-900 text-white rounded-lg flex items-center gap-4 p-4">
-              <img src="/sb_logo.png" alt="Avatar" class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center">
-              <div>
-                <div class="flex items-center gap-4">
-                  <h2 class="text-xl font-bold">Juan Díaz</h2>
-                  <span class="text-blue-500 bg-blue-950 hover:bg-gray-900  text-xs px-2 py-1 rounded-lg">Project Manager</span>
-                </div>
 
-                <p class="mt-2 text-gray-400">Especialista en gestión de proyectos de reforma con más de 8 años de experiencia</p>
-                <div class="mt-4 flex space-x-4">
-                  <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Edit Profile</button>
-                  <button class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Budget Limit</button>
-                </div>
+  <mat-tab-group class="w-full flex-1 h-0 min-h-0" mat-align-tabs="center">
+    <!-- Pestaña de Perfil -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="color:white">person</mat-icon>
+        <div class="tab-principal md:block hidden text-white">Perfil</div>
+      </ng-template>
+      <div class="w-full h-full p-4 overflow-auto">
+        <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col gap-4">
+          <div class="flex flex-col lg:flex-row items-center gap-4">
+            <img src="/favicon.ico" alt="Avatar"
+                 class="w-26 h-26 bg-gray-700 rounded-full flex items-center justify-center">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl lg:text-2xl font-bold">{{ user?.username || 'Usuario' }}</h2>
+                <span
+                  class="text-blue-500 bg-blue-950 hover:bg-gray-900 text-xs px-2 py-1 rounded-lg">{{getRole(user?.role)}}</span>
+              </div>
+              <p class="mt-2 text-gray-400">Especialista en gestión de proyectos de reforma con más de 8 años de
+                experiencia</p>
+              <div class="mt-4 flex gap-4">
+                <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 cursor-pointer">Edit Profile</button>
+                <button class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer btn">Budget Limit</button>
               </div>
             </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>mail</mat-icon>
-                    <span>juan.doe&#64;example.com</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>phone</mat-icon>
-                    <span>+34 600 000 000</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>location_on</mat-icon>
-                    <span>Madrid, España</span>
-                  </div>
-                </div>
-                <div class="space-y-4">
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>person</mat-icon>
-                    <span>Miembro desde Enero 2024</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>check_circle</mat-icon>
-                    <span>15 proyectos completados</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <mat-icon>schedule</mat-icon>
-                    <span>40 horas/semana</span>
-                  </div>
-                </div>
-              </div>
+          </div>
+        <div class="project-container">
+          <h2>Proyectos Actuales</h2>
+          <div *ngFor="let project of projects">
+            <p>{{ project.name }} <span>{{ project.budget | currency }}</span></p>
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(project.spent / project.budget) * 100"></div>
+            </div>
+          </div>
+          <a routerLink="../dashboard" routerLinkActive="active" class="btn cursor-pointer">Ver Todos</a>
         </div>
-      </mat-tab>
+        </div>
 
-      <!-- Pestaña de Notificaciones -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="example-tab-icon" style="color:white">notifications</mat-icon>
-          <p class="tab-principal">Notificaciones</p>
-        </ng-template>
-        <div class="w-full h-full">
-          <mat-card class="h-full">
-            <mat-card-header>
-              <mat-card-title>Notificaciones</mat-card-title>
-              <mat-card-subtitle>
-                Tienes {{getNotReaded()}}
-                notificaciones sin leer
-              </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content class="space-y-4 w-full">
-              <div *ngFor="let notification of notifications" class="flex items-start gap-4 p-4 rounded-lg" [ngClass]="{'bg-gray-800': !notification.read}">
-                <mat-icon>notifications</mat-icon>
-                <div class="flex-1 space-y-1">
-                  <p class="font-medium leading-none">{{ notification.title }}</p>
-                  <p class="text-sm text-gray-500">{{ notification.description }}</p>
-                  <p class="text-xs text-gray-400">{{ notification.time }}</p>
-                </div>
-                <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </mat-tab>
+      </div>
+    </mat-tab>
 
-      <!-- Pestaña de Actividad -->
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="example-tab-icon" style="color:white">event</mat-icon>
-          <p class="tab-principal">Actividad</p>
-        </ng-template>
-        <div class="w-full h-full">
-          <mat-card class="h-full">
-            <mat-card-header>
-              <mat-card-title>Actividad Reciente</mat-card-title>
-              <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content class="space-y-4 w-full">
-              <div *ngFor="let activity of activities" class="flex items-start gap-4 p-4">
-                <mat-icon>event</mat-icon>
-                <div class="flex-1 space-y-1">
-                  <p class="font-medium leading-none">{{ activity.action }}</p>
-                  <p class="text-sm text-gray-500">{{ activity.description }}</p>
-                  <p class="text-xs text-gray-400">{{ activity.time }}</p>
-                </div>
+    <!-- Pestaña de Notificaciones -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="color:white">notifications</mat-icon>
+        <div class="tab-principal md:block hidden text-white">Notificaciones</div>
+      </ng-template>
+      <div class="w-full h-full p-4 overflow-auto">
+        <div class="bg-gray-800">
+          <mat-card-header>
+            <mat-card-title>Notificaciones</mat-card-title>
+            <mat-card-subtitle>
+              Tienes {{ getNotReaded() }} notificaciones sin leer
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="space-y-4">
+            <div *ngFor="let notification of notifications" class="flex items-start gap-4 p-4 rounded-lg"
+                 [ngClass]="{'bg-gray-800': !notification.read}">
+              <mat-icon>notifications</mat-icon>
+              <div class="flex-1 space-y-1">
+                <p class="font-medium leading-none">{{ notification.title }}</p>
+                <p class="text-sm text-gray-500">{{ notification.description }}</p>
+                <p class="text-xs text-gray-400">{{ notification.time }}</p>
               </div>
-            </mat-card-content>
-          </mat-card>
+              <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
+            </div>
+          </mat-card-content>
         </div>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+      </div>
+    </mat-tab>
+
+    <!-- Pestaña de Actividad -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="color:white">event</mat-icon>
+        <div class="tab-principal md:block hidden text-white">Actividad</div>
+      </ng-template>
+      <div class="w-full h-full p-4 overflow-auto">
+        <mat-card class="h-full">
+          <mat-card-header>
+            <mat-card-title>Actividad Reciente</mat-card-title>
+            <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="space-y-4">
+            <div *ngFor="let activity of activities" class="flex items-start gap-4 p-4">
+              <mat-icon>event</mat-icon>
+              <div class="flex-1 space-y-1">
+                <p class="font-medium leading-none">{{ activity.action }}</p>
+                <p class="text-sm text-gray-500">{{ activity.description }}</p>
+                <p class="text-xs text-gray-400">{{ activity.time }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

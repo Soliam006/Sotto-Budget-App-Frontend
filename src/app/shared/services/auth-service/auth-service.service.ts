@@ -48,6 +48,7 @@ export class AuthService {
    * @returns Un observable con la respuesta del servidor.
    */
   logout(): Observable<any> {
+    localStorage.removeItem('token');
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
 

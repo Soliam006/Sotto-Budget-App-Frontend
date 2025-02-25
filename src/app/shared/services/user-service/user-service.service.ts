@@ -19,9 +19,13 @@ export class UserServiceService {
     this.token = token;
   }
 
+  getUser(): User | null {
+    return this.user$.value;
+  }
+
 
   // Set the user
-  setUser(user: User): void {
+  setUser(user: User|null): void {
     this.user$.next(user);
   }
 
@@ -37,8 +41,8 @@ export class UserServiceService {
     this.user$.next({...this.user$.value, role});
   }
 
-  changeName(name: string): void {
-    this.user$.next({...this.user$.value, name});
+  changeUsernameName(username: string): void {
+    this.user$.next({...this.user$.value, username});
   }
 
   changeEmail(email: string): void {
