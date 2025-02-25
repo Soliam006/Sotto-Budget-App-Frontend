@@ -1,46 +1,101 @@
-<div class="flex flex-row bg-gray-800 w-full h-screen ">
-<div class="h-screen w-64 bg-gray-900 text-white flex flex-col p-4">
-  <img src="sb_logo.png" alt="Logo" class=" w-full h-20 rounded-full mx-auto mb-6">
+<div class="flex flex-row bg-black/90 w-screen h-screen overflow-hidden">
+  <!-- Botón para abrir/cerrar el sidebar en pantallas pequeñas -->
+  <button (click)="toggleSidebar()"
+          class="md:hidden fixed bottom-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-xl
+          w-20 h-20">
+    <mat-icon>menu</mat-icon>
+  </button>
 
-  <nav class="space-y-2">
-    <a routerLink="dashboard" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition" routerLinkActive="active">
-      <div class="home"><mat-icon class="mr-3">home</mat-icon> </div>
-      <span>Dashboard</span>
-    </a>
+  <!-- Sidebar -->
+  <div [ngClass]="{'hidden': !sidebarOpen, 'block': sidebarOpen}" class="h-full w-64 bg-gray-900 text-white
+  flex flex-col p-4 overflow-y-auto fixed md:relative md:block z-30">
 
-    <a routerLink="tasks" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-      <div class="tasks"><mat-icon class="mr-3">assignment</mat-icon></div>
-      <span>Tareas</span>
-    </a>
+    <img src="sb_logo.png" alt="Logo" class="w-full h-20 rounded-full mx-auto mb-6">
 
-    <a routerLink="calendar" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-      <div class="calendar"><mat-icon class="mr-3">calendar_today</mat-icon></div>
-      <span>Calendario</span>
-    </a>
+    <nav class="space-y-2">
+      <a routerLink="dashboard" (click)="toggleSidebar()"
+         class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+        <div class="home"><mat-icon class="mr-3">home</mat-icon> </div>
+        <span>Dashboard</span>
+      </a>
 
-    <a routerLink="materials" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-      <div class="materials"><mat-icon class="mr-3">inventory_2</mat-icon></div>
-      <span>Materiales</span>
-    </a>
+      <a routerLink="tasks" (click)="toggleSidebar()"
+         class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+        <div class="tasks"><mat-icon class="mr-3">assignment</mat-icon></div>
+        <span>Tareas</span>
+      </a>
 
-    <a routerLink="team" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-      <div class="team"><mat-icon class="mr-3">groups</mat-icon></div>
-      <span>Equipo</span>
-    </a>
+      <a routerLink="calendar" (click)="toggleSidebar()"
+         class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+        <div class="calendar"><mat-icon class="mr-3">calendar_today</mat-icon></div>
+        <span>Calendario</span>
+      </a>
 
-    <a routerLink="reports" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
+      <a routerLink="materials" (click)="toggleSidebar()"
+         class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+        <div class="materials"><mat-icon class="mr-3">inventory_2</mat-icon></div>
+        <span>Materiales</span>
+      </a>
+
+      <a routerLink="team"(click)="toggleSidebar()"
+         class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+        <div class="team"><mat-icon class="mr-3">groups</mat-icon></div>
+        <span>Equipo</span>
+      </a>
+
+      <a routerLink="reports" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab">
         <div class="reports"><mat-icon class="mr-3">description</mat-icon></div>
-      <span>Reportes</span>
-    </a>
+        <span>Reportes</span>
+      </a>
+    </nav>
 
-    <a routerLink="profile" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-        <div class="profile"><mat-icon class="mr-3">account_circle</mat-icon></div>
-      <span>Profile</span>
-    </a>
-  </nav>
-</div>
-  <div>
-    <main class="w-full p-10">
+    <!-- Perfil del Usuario -->
+    <div class="mt-auto border-t border-gray-700 pt-4 bottom-0">
+      <div class="relative">
+        <button (click)="toggleDropdown($event)"
+                class="flex items-center p-3 w-full rounded-lg hover:bg-gray-800 transition cursor-pointer">
+          <!-- Foto de perfil o Iniciales -->
+          <div *ngIf="user?.avatar; else initials" class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden mr-3">
+            <img [src]="user?.avatar" alt="Avatar" class="w-full h-full object-cover">
+          </div>
+          <!-- Iniciales si no tiene foto -->
+          <ng-template #initials>
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-600 mr-3 text-lg font-semibold">
+              {{ getInitials(user?.username) }}
+            </div>
+          </ng-template>
+
+          <!-- Nombre y Rol -->
+          <div class="text-left">
+            <p class="text-sm font-semibold">{{ user?.username || 'Usuario' }}</p>
+            <p class="text-xs text-gray-400">{{ user?.role || 'Sin rol' }}</p>
+          </div>
+        </button>
+
+        <!-- Menú desplegable -->
+        <div *ngIf="dropdownOpen" #dropdownMenu class="absolute bottom-14 left-0 w-full bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+          <a routerLink="profile" (click)="toggleSidebar()" routerLinkActive="active"
+             class="flex items-center p-3 hover:bg-gray-700 transition">
+            <mat-icon class="mr-3">person</mat-icon>
+            <span>Perfil</span>
+          </a>
+          <a routerLink="notifications" (click)="toggleSidebar()" routerLinkActive="active"
+             class="flex items-center p-3 hover:bg-gray-700 transition">
+            <mat-icon class="mr-3">notifications</mat-icon>
+            <span>Notificaciones</span>
+          </a>
+          <button (click)="logout()" class="flex items-center p-3 w-full hover:bg-red-600 transition text-red-400">
+            <mat-icon class="mr-3">logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="flex-1 overflow-y-auto">
+    <main class="h-full w-full">
       <router-outlet></router-outlet>
     </main>
   </div>
