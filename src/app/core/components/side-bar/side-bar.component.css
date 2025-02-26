@@ -1,0 +1,72 @@
+.active {
+  font-weight: bold;
+  color: #499dda;
+}
+.tab:hover {
+  box-shadow: 0px 4px 2px -2px #9ca3af inset;
+}
+.home mat-icon{
+  color: #499dda;
+}
+.tasks mat-icon{
+  color: #962fec;
+}
+.calendar mat-icon{
+  color: #d9208f;
+}
+.materials mat-icon{
+  color: #e1521d;
+}
+.team mat-icon{
+  color: #66cc99;
+}
+.reports mat-icon{
+  color: #177509;
+}
+.profile mat-icon{
+  color: #778bec;
+}
+/*ANIMACION SideBar--------*/
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.slide-in {
+  animation: slideIn 0.3s forwards;
+}
+/*ANIMACION SideBar Salir--------*/
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-20%);
+  }
+}
+.slide-out {
+  animation: slideOut 0.3s forwards;
+}
+/*------Collapsed Motion------------*/
+.sidebar.collapsed {
+  width: 4rem; /* Ancho cuando está colapsado */
+}
+
+.sidebar.collapsed .md\\:block {
+  display: none; /* Oculta el texto cuando está colapsado */
+}
+
+.sidebar.collapsed .mat-icon {
+  margin-right: 0; /* Elimina el margen derecho del ícono cuando está colapsado */
+}
+
+.sidebar.collapsed .tab {
+  justify-content: center; /* Centra los íconos cuando está colapsado */
+}
+
+.sidebar.collapsed .user-info {
+  display: none; /* Oculta la información del usuario cuando está colapsado */
+}

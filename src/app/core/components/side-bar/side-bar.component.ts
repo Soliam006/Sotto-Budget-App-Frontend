@@ -1,29 +1,26 @@
-import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import { CommonModule} from '@angular/common';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {UserServiceService} from '../../../shared/services/user-service/user-service.service';
+import {AuthService} from '../../../shared/services/auth-service/auth-service.service';
+import {User} from '../../../shared/models/user';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {CommonModule} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
-import {UserServiceService} from '../../shared/services/user-service/user-service.service';
-import {User} from '../../shared/models/user';
-import {AuthService} from '../../shared/services/auth-service/auth-service.service';
-import {SideBarComponent} from '../../core/components/side-bar/side-bar.component';
 
 @Component({
-  selector: 'app-sottobudget',
+  selector: 'app-side-bar',
   imports: [
-    RouterOutlet,
+    RouterLink,
     CommonModule,
     MatIconModule,
-    SideBarComponent
-  ],
-  templateUrl: './sottobudget.component.html',
-  styleUrl: './sottobudget.component.css'
+    RouterLinkActive,
+    ],
+  templateUrl: './side-bar.component.html',
+  styleUrl: './side-bar.component.css'
 })
-export class SottobudgetComponent {
+export class SideBarComponent {
   user: User | null = null;
   sidebarOpen = false;
   dropdownOpen = false;
-
-
   constructor(private userService: UserServiceService,
               private auth: AuthService,
               private eRef: ElementRef
@@ -35,7 +32,7 @@ export class SottobudgetComponent {
       this.user = {
         id: 1,
         username: 'Blas Sotto',
-        email: 'Jo@prova.com',
+        email: 's@s.com',
         role: 'admin',
         language: 'en'
       }
@@ -62,17 +59,4 @@ export class SottobudgetComponent {
     return initials.length > 2 ? initials.slice(0, 2) : initials;
   }
   @ViewChild('dropdownMenu', {static: false}) dropdownMenu!: ElementRef;
-
-  // Detectar clics fuera del dropdown para cerrarlo
-  // Detectar clics fuera del dropdown
-  @HostListener('document:click', ['$event'])
-  clickOutside(event: Event) {
-    if (
-      this.dropdownOpen &&
-      this.dropdownMenu &&
-      !this.dropdownMenu.nativeElement.contains(event.target)
-    ) {
-      this.dropdownOpen = false;
-    }
-  }
 }

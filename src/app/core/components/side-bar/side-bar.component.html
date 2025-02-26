@@ -1,0 +1,89 @@
+<!-- Sidebar -->
+<!--<div [ngClass]="{ 'hidden': !sidebarOpen,'block': sidebarOpen, 'slide-in': sidebarOpen}"-->
+<div class="h-full w-20 md:w-24 lg:w-64 bg-gray-900 text-white flex flex-col p-4 overflow-y-auto fixed
+  relative lg:block z-30 transition-all duration-300 ease-in-out" [class.collapsed]="!sidebarOpen">
+
+  <img src="sb_logo.png" alt="Logo" class="w-full h-20 rounded-full mx-auto mb-6 lg:block hidden">
+  <img src="favicon.ico" alt="Logo" class="w-14 h-14 md:w-20 md:h-20 rounded-full mx-auto mb-6 lg:hidden block">
+
+  <nav class="space-y-2 sidebar">
+    <a routerLink="dashboard"
+       class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+      <div class="home"><mat-icon class="mr-3">home</mat-icon> </div>
+      <span class="lg:block hidden">Dashboard</span>
+    </a>
+
+    <a routerLink="tasks"
+       class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+      <div class="tasks"><mat-icon class="mr-3">assignment</mat-icon></div>
+      <span class="lg:block hidden">Tareas</span>
+    </a>
+
+    <a routerLink="calendar"
+       class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+      <div class="calendar"><mat-icon class="mr-3">calendar_today</mat-icon></div>
+      <span class="lg:block hidden">Calendario</span>
+    </a>
+
+    <a routerLink="materials"
+       class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+      <div class="materials"><mat-icon class="mr-3">inventory_2</mat-icon></div>
+      <span class="lg:block hidden">Materiales</span>
+    </a>
+
+    <a routerLink="team"
+       class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab" routerLinkActive="active">
+      <div class="team"><mat-icon class="mr-3">groups</mat-icon></div>
+      <span class="lg:block hidden">Equipo</span>
+    </a>
+
+    <a routerLink="reports" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition tab">
+      <div class="reports"><mat-icon class="mr-3">description</mat-icon></div>
+      <span class="lg:block hidden">Reportes</span>
+    </a>
+  </nav>
+
+  <!-- Perfil del Usuario -->
+  <div class="mt-auto border-t border-gray-700 pt-4 bottom-0">
+    <div class="relative">
+      <div (click)="toggleDropdown($event)"
+           class="lg:flex items-center p-3 w-full rounded-lg hover:bg-gray-800 transition cursor-pointer">
+        <!-- Foto de perfil o Iniciales -->
+        <div *ngIf="user?.avatar; else initials" class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden mr-3">
+          <img [src]="user?.avatar" alt="Avatar" class="w-full h-full object-cover">
+        </div>
+        <!-- Iniciales si no tiene foto -->
+        <ng-template #initials>
+          <div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-600 text-lg lg:mr-3 lg:font-semibold">
+            {{ getInitials(user?.username) }}
+          </div>
+        </ng-template>
+
+        <!-- Nombre y Rol -->
+        <div class="text-left lg:block hidden">
+          <p class="text-sm font-semibold">{{ user?.username || 'Usuario' }}</p>
+          <p class="text-xs text-gray-400">{{ user?.role || 'Sin rol' }}</p>
+        </div>
+      </div>
+
+      <!-- Menú desplegable -->
+      <div *ngIf="dropdownOpen" #dropdownMenu
+           class="absolute bottom-14 left-0 lg:w-full bg-gray-800 rounded-lg shadow-lg overflow-hidden items-center ">
+        <a routerLink="profile" routerLinkActive="active"
+           class="flex items-center p-3 hover:bg-gray-700 transition">
+          <mat-icon class="lg:mr-3">person</mat-icon>
+          <span class="lg:block hidden">Perfil</span>
+        </a>
+        <a routerLink="notifications" routerLinkActive="active"
+           class="flex items-center p-3 hover:bg-gray-700 transition">
+          <mat-icon class="lg:mr-3">notifications</mat-icon>
+          <span class="lg:block hidden">Notificaciones</span>
+        </a>
+        <button (click)="logout()" class="flex items-center p-3 w-full hover:bg-red-600 transition text-red-400">
+          <mat-icon class="lg:mr-3">logout</mat-icon>
+          <span class="lg:block hidden">Cerrar sesión</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
