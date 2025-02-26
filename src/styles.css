@@ -10,3 +10,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: var(--text-3xl);
   line-height: var(--tw-leading, var(--text-3xl--line-height));
 }
+.custom-dialog-container .mat-datepicker-popup {
+  z-index: 9999 !important;
+}

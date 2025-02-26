@@ -1,25 +1,57 @@
-import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatIconModule} from '@angular/material/icon';
+import {CommonModule} from '@angular/common';
 import {UserServiceService} from '../../../../shared/services/user-service/user-service.service';
 import {User} from '../../../../shared/models/user';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ProfileEditDialogComponent} from '../profile-edit-dialog/profile-edit-dialog.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-profile',
   imports: [
-    MatCardModule, MatTabsModule, MatButtonModule, MatBadgeModule,
-    MatIconModule, CommonModule, RouterLink, RouterLinkActive
+    MatCardModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatBadgeModule,
+    MatIconModule,
+    CommonModule, RouterLink, RouterLinkActive,
+    ReactiveFormsModule,
+    MatFormFieldModule, MatDatepickerModule
   ],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
   user: User | null = null;
+  isEditing = false;
+  availableDates = [ // Fechas disponibles para trabajar
+    { from: new Date('2021-08-01'), to: new Date('2021-08-15') },
+    { from: new Date('2021-09-01'), to: new Date('2021-09-15') },
+  ];
+
+  changeEditing(): void {
+    this.isEditing = !this.isEditing;
+  }
+  addDateRange(): void {
+    this.availableDates.push({
+      from: new Date(),
+      to: new Date()
+    });
+  }
+  removeDateRange(index: number): void {
+    this.availableDates.splice(index, 1);
+  }
   projects = [
     {
       id: 1,
@@ -56,7 +88,10 @@ export class ProfileComponent {
     },
   ];
 
-  constructor(private userService: UserServiceService){
+  constructor(
+    private userService: UserServiceService,
+    private dialog: MatDialog
+  ) {
     this.user = this.userService.getUser();
     if (!this.user)
       this.user = {
@@ -119,6 +154,12 @@ export class ProfileComponent {
 
   getRole(role: string | undefined): string {
     if (!role) return 'No definido';
-    return role === 'admin' ? 'Project Manager' : role === 'client' ? 'Cliente': 'Trabajador';
+    return role === 'admin' ? 'Project Manager' : role === 'client' ? 'Cliente' : 'Trabajador';
   }
+
+  editProfile(): void {
+    this.isEditing = true;
+  }
+
+
 }

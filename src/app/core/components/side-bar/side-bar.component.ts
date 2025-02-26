@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {UserServiceService} from '../../../shared/services/user-service/user-service.service';
 import {AuthService} from '../../../shared/services/auth-service/auth-service.service';
 import {User} from '../../../shared/models/user';
@@ -59,4 +59,17 @@ export class SideBarComponent {
     return initials.length > 2 ? initials.slice(0, 2) : initials;
   }
   @ViewChild('dropdownMenu', {static: false}) dropdownMenu!: ElementRef;
+
+  // Detectar clics fuera del dropdown para cerrarlo
+  // Detectar clics fuera del dropdown
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (
+      this.dropdownOpen &&
+      this.dropdownMenu &&
+      !this.dropdownMenu.nativeElement.contains(event.target)
+    ) {
+      this.dropdownOpen = false;
+    }
+  }
 }
