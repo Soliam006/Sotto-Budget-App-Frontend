@@ -1,1 +1,52 @@
-<p>bottom-bar works!</p>
+@defer {
+<nav class="fixed bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center p-2 shadow-md z-9999">
+  <!-- Dashboard -->
+  <a routerLink="dashboard" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+    <div class="home"><mat-icon>home</mat-icon> </div>
+    <span class="text-xs text-white info info-home hidden">Dashboard</span>
+  </a>
+
+  <!-- Tareas -->
+  <a routerLink="tasks" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+    <div class="tasks"><mat-icon>assignment</mat-icon></div>
+    <span class="text-xs text-white info info-task hidden">Tasks</span>
+  </a>
+
+  <!-- Calendario -->
+  <a routerLink="calendar" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+    <div class="calendar"><mat-icon>calendar_today</mat-icon></div>
+    <span class="text-xs text-white info info-cal hidden">Calendario</span>
+  </a>
+
+  <!-- Materiales -->
+  <a routerLink="materials" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+    <div class="materials"><mat-icon>inventory_2</mat-icon></div>
+    <span class="text-xs text-white info info-mal hidden">Materiales</span>
+  </a>
+
+  <!-- Perfil con dropdown -->
+  <div class="relative">
+    <button (click)="toggleDropdown()"
+            class="flex flex-col items-center p-2 transition cursor-pointer">
+      <mat-icon>person</mat-icon>
+    </button>
+
+    <div *ngIf="dropdownOpen"  #dropdownMenu
+         class="absolute bottom-16 right-0 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <a routerLink="profile" routerLinkActive="active"
+         class="flex items-center p-3 hover:bg-gray-700 transition">
+        <mat-icon class="mr-3">person</mat-icon>
+        <span class="info info-prof">Perfil</span>
+      </a>
+      <a routerLink="/notifications" class="flex items-center p-3 hover:bg-gray-700 transition">
+        <mat-icon class="mr-3">notifications</mat-icon>
+        <span>Notificaciones</span>
+      </a>
+      <button (click)="logout()" class="flex items-center p-3 w-full hover:bg-red-600 transition text-red-400">
+        <mat-icon class="mr-3">logout</mat-icon>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </div>
+</nav>
+}

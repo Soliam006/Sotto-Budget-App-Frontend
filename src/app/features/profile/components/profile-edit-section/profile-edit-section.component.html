@@ -1,0 +1,95 @@
+<div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col gap-4">
+  <h2 class="text-2xl font-semibold text-gray-200 mb-4">Editar Perfil</h2>
+  <!-- Cancel and Save Buttons -->
+  <div class="flex justify-between space-x-4">
+    <button (click)="cancelar()"
+            class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 cursor-pointer">
+      Cancelar
+    </button>
+    <button (click)="saveData()"
+            class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 cursor-pointer">
+      Save
+    </button>
+  </div>
+
+  <div class="mt-6 text-center flex items-center mb-1">
+    <p class="bar-horizontal mx-1"></p>
+    <p class="text-gray-200 text-xl">Cuenta</p>
+    <p class="bar-horizontal mx-1"></p>
+  </div>
+
+  <form class="example-form" [formGroup]="userInfoForm">
+    <mat-form-field class="example-full-width">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="{{user?.username}}" value="Sushi">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput id="email" formControlName="email"
+             placeholder="{{user?.email}}">
+      <mat-hint>Errors appear instantly!</mat-hint>
+      @if (userInfoForm.get('email')?.hasError('email')){
+        <mat-error>Please enter a valid email address</mat-error>
+      }
+      @if (userInfoForm.get('email')?.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+
+
+
+
+
+
+
+  <div class="mt-6 text-center flex items-center mb-1">
+    <p class="bar-horizontal mx-1"></p>
+    <p class="text-gray-200 text-xl">Disponibilidad</p>
+    <p class="bar-horizontal mx-1"></p>
+  </div>
+
+  <mat-form-field class="w-full">
+    <mat-label>Rango de Fechas</mat-label>
+    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+      <input matStartDate formControlName="start" placeholder="Fecha de inicio" class="px-3 py-2 border rounded-md">
+      <input matEndDate formControlName="end" placeholder="Fecha de fin" class="px-3 py-2 border rounded-md">
+    </mat-date-range-input>
+    <mat-hint class="text-gray-500">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    @if (range.controls['start'].invalid) {
+      <mat-error class="text-red-500">Fecha de inicio no válida</mat-error>
+    }
+    @if (range.controls['end'].invalid) {
+      <mat-error class="text-red-500">Fecha de fin no válida</mat-error>
+    }
+  </mat-form-field>
+
+  <button
+    (click)="addDateRange()"
+    [disabled]="range.invalid"
+    class="mt-1 w-full bg-blue-600 hover:bg-blue-700/50 text-gray-200 py-2 rounded-lg
+    disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+  >
+    Añadir Rango de Fechas
+  </button>
+
+  <h3 class="mt-6 text-lg font-semibold p-3 bg-gray-100 text-gray-700 rounded-md"
+      *ngIf="this.dateRanges.length>0">Fechas agregadas:</h3>
+  <ul class="mt-1">
+    <li *ngFor="let dateRange of dateRanges; let i = index"
+        class="flex justify-between items-center bg-gray-50 p-3 rounded-md shadow-sm mb-2">
+      <span class="text-gray-700">{{ dateRange.start | date }} - {{ dateRange.end | date }}</span>
+      <button
+        (click)="removeDateRange(i)"
+        class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg transition-all">
+        Eliminar
+      </button>
+    </li>
+  </ul>
+
+</div>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonModule} from '@angular/material/button';
@@ -9,11 +9,11 @@ import {UserServiceService} from '../../../../shared/services/user-service/user-
 import {User} from '../../../../shared/models/user';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {ProfileEditDialogComponent} from '../profile-edit-dialog/profile-edit-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {ProfileEditSectionComponent} from '../profile-edit-section/profile-edit-section.component';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -25,33 +25,30 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     MatIconModule,
     CommonModule, RouterLink, RouterLinkActive,
     ReactiveFormsModule,
-    MatFormFieldModule, MatDatepickerModule
+    MatFormFieldModule, MatDatepickerModule, ProfileEditSectionComponent,
   ],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
   user: User | null = null;
   isEditing = false;
-  availableDates = [ // Fechas disponibles para trabajar
-    { from: new Date('2021-08-01'), to: new Date('2021-08-15') },
-    { from: new Date('2021-09-01'), to: new Date('2021-09-15') },
-  ];
+  isEditingChange$ = new BehaviorSubject(false);
+  editprofileChange = this.isEditingChange$.asObservable();
+  // Signal Save
+  save$ = new BehaviorSubject(false);
+  saved = this.save$.asObservable();
+
+  readonly range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+  dateRanges: { start: Date, end: Date }[] = [];
 
   changeEditing(): void {
     this.isEditing = !this.isEditing;
   }
-  addDateRange(): void {
-    this.availableDates.push({
-      from: new Date(),
-      to: new Date()
-    });
-  }
-  removeDateRange(index: number): void {
-    this.availableDates.splice(index, 1);
-  }
+
   projects = [
     {
       id: 1,
@@ -101,6 +98,12 @@ export class ProfileComponent {
         role: 'admin',
         language: 'en'
       }
+    this.saved.subscribe((value) => {
+      console.log("SAVED IN FATHER");
+    });
+    this.editprofileChange.subscribe((value) => {
+      this.isEditing = value;
+    });
   }
 
   notifications = [
@@ -155,10 +158,6 @@ export class ProfileComponent {
   getRole(role: string | undefined): string {
     if (!role) return 'No definido';
     return role === 'admin' ? 'Project Manager' : role === 'client' ? 'Cliente' : 'Trabajador';
-  }
-
-  editProfile(): void {
-    this.isEditing = true;
   }
 
 

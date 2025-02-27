@@ -21,64 +21,35 @@
                 <span
                   class="text-blue-500 bg-blue-950 hover:bg-gray-900 text-xs px-2 py-1 rounded-lg">{{getRole(user?.role)}}</span>
               </div>
-              <p class="mt-2 text-gray-400">Especialista en gestión de proyectos de reforma con más de 8 años de
-                experiencia</p>
+              <p class="mt-2 text-gray-400">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+                architecto
+                aspernatur atque autem, blanditiis consequuntur.</p>
               <div class="mt-4 flex gap-4">
-                <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 cursor-pointer"  (click)="editProfile()"
-                >Edit Profile</button>
-                <button class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer btn">Budget Limit</button>
+                <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 cursor-pointer"  (click)="changeEditing()">
+                  Edit Profile
+                </button>
+                <button class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer btn">
+                  Budget Limit
+                </button>
               </div>
             </div>
           </div>
-        <div class="project-container">
-          <h2>Proyectos Actuales</h2>
-          <div *ngFor="let project of projects">
-            <p>{{ project.name }} <span>{{ project.budget | currency }}</span></p>
-            <div class="progress-bar">
-              <div class="progress" [style.width.%]="(project.spent / project.budget) * 100"></div>
+          <div class="project-container">
+            <h2>Proyectos Actuales</h2>
+            <div *ngFor="let project of projects">
+              <p>{{ project.name }} <span>{{ project.budget | currency }}</span></p>
+              <div class="progress-bar">
+                <div class="progress" [style.width.%]="(project.spent / project.budget) * 100"></div>
+              </div>
             </div>
-          </div>
-          <a routerLink="../dashboard" routerLinkActive="active" class="btn cursor-pointer">Ver Todos</a>
-        </div>
-        </div>
-      </div>
-      <div class="w-full h-full p-4 overflow-auto" *ngIf="isEditing">
-        <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col gap-4">
-        <div class="space-y-4">
-          <mat-form-field class="full-width">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="name">
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <mat-label>Teléfono</mat-label>
-            <input matInput formControlName="phone" type="tel">
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <mat-label>Presupuesto Límite</mat-label>
-            <input matInput formControlName="budgetLimit" type="number">
-          </mat-form-field>
-
-          <h3>Disponibilidad</h3>
-          <div *ngFor="let range of availableDates; let i = index" class="date-range-container">
-            <div class="z-9999">
-              <mat-form-field class="z-9999" >
-                <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Start date">
-                  <input matEndDate placeholder="End date">
-                </mat-date-range-input>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker overlayClass="custom-datepicker-overlay"></mat-date-range-picker>
-              </mat-form-field>
-            </div>
-            <button mat-icon-button color="warn" (click)="removeDateRange(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+            <a routerLink="../dashboard" routerLinkActive="active" class="btn cursor-pointer">Ver Todos</a>
           </div>
         </div>
-        <button mat-button color="primary" (click)="addDateRange()">Añadir intervalo de fechas</button>
       </div>
+      <div class="w-full h-full p-4 overflow-auto">
+        <profile-edit-section [dateRanges]="dateRanges" [range]="range" [user]="user"
+                              [save]="save$" [isEditing]="isEditingChange$"></profile-edit-section>
+
       </div>
     </mat-tab>
 

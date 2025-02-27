@@ -1,0 +1,44 @@
+
+.home mat-icon{
+  color: #499dda;
+}
+
+.active .info{
+  font-weight: bold;
+  display: block;
+}
+.active .info-home{
+  color: #499dda;
+}
+.active .info-tasks{
+  color: #962fec;
+}
+.active .info-calendar{
+  color: #d9208f;
+}
+.active .info-materials{
+  color: #e1521d;
+}
+.active .info-prof{
+  color: #3a54d7;
+}
+
+
+.tasks mat-icon{
+  color: #962fec;
+}
+.calendar mat-icon{
+  color: #d9208f;
+}
+.materials mat-icon{
+  color: #e1521d;
+}
+.team mat-icon{
+  color: #66cc99;
+}
+.reports mat-icon{
+  color: #177509;
+}
+.profile mat-icon{
+  color: #778bec;
+}

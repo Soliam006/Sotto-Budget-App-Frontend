@@ -10,8 +10,6 @@ export const routes: Routes = [
       {path: '', redirectTo: 'profile', pathMatch: 'full'},
       {path: 'dashboard', loadComponent: () => import('./features/dashboard/components/dashboard/dashboard.component').then(m => m.DashboardComponent)},
       {path: 'profile', loadComponent: () => import('./features/profile/components/profile/profile.component').then(m => m.ProfileComponent)},
-      {path: '**', redirectTo: 'not-found'},
-      {path: 'not-found', loadComponent: () => import('./features/z-not-found/not-found/not-found.component').then(m => m.NotFoundComponent)}
     ]
   },
   {path: 'sign-in', loadComponent: () => import('./features/auth/sign-in/login.component').then(m => m.LoginComponent)},
