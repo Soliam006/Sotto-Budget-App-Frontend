@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -36,11 +36,12 @@ import {User} from '../../../../shared/models/user';
 export class ProfileEditSectionComponent{
   @Input() range!: FormGroup;
   @Input() dateRanges: { start: Date, end: Date }[] = [];
-  @Input() isEditing!: BehaviorSubject<boolean>
   @Input() save!: BehaviorSubject<boolean>
   @Input() user!: User |null;
+  @Output() cancel = new EventEmitter<void>();
 
   userInfoForm : FormGroup;
+  email: string = "Bla@as.com";
 
   constructor(
     private fb: FormBuilder,
@@ -67,9 +68,8 @@ export class ProfileEditSectionComponent{
     this.dateRanges.splice(index, 1);
   }
 
-
   cancelar(){
-    this.isEditing.next(false);
+    this.cancel.emit();
   }
   saveData(){
     console.log(this.dateRanges);

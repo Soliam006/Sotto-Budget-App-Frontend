@@ -49,7 +49,7 @@
       @if (isEditing){
       <div class="w-full h-full p-4 overflow-auto">
         <profile-edit-section [dateRanges]="dateRanges" [range]="range" [user]="user"
-                              [save]="save$" [isEditing]="isEditingChange$"></profile-edit-section>
+                              [save]="save$" (cancel)=changeEditing()></profile-edit-section>
 
       </div>
       }

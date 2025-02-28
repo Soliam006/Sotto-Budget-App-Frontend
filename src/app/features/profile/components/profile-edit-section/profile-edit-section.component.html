@@ -17,27 +17,34 @@
     <p class="text-gray-200 text-xl">Cuenta</p>
     <p class="bar-horizontal mx-1"></p>
   </div>
+  <form class="w-full bg-white p-6 shadow-md rounded-lg" [formGroup]="userInfoForm">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Username Field -->
+      <div class="flex flex-col">
+        <mat-form-field class="w-full">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="{{user?.username}}" value="{{user?.username}}" class="px-3 py-2 border rounded-md">
+        </mat-form-field>
+      </div>
 
-  <form class="example-form" [formGroup]="userInfoForm">
-    <mat-form-field class="example-full-width">
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="{{user?.username}}" value="Sushi">
-    </mat-form-field>
+      <!-- Email Field -->
+      <div class="flex flex-col">
+        <mat-form-field class="w-full">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput id="email" formControlName="email" placeholder="{{user?.email}}"  [value]="email" class="px-3 py-2 border rounded-md">
+          <mat-hint class="text-gray-500">Errors appear instantly!</mat-hint>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput id="email" formControlName="email"
-             placeholder="{{user?.email}}">
-      <mat-hint>Errors appear instantly!</mat-hint>
-      @if (userInfoForm.get('email')?.hasError('email')){
-        <mat-error>Please enter a valid email address</mat-error>
-      }
-      @if (userInfoForm.get('email')?.hasError('required')) {
-        <mat-error>Email is <strong>required</strong></mat-error>
-      }
-    </mat-form-field>
-
+          @if (userInfoForm.get('email')?.hasError('email')) {
+          <mat-error class="text-red-500">Please enter a valid email address</mat-error>
+          }
+          @if (userInfoForm.get('email')?.hasError('required')) {
+          <mat-error class="text-red-500">Email is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
   </form>
+
 
 
 

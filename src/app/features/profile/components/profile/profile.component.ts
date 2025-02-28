@@ -33,8 +33,6 @@ import {BehaviorSubject} from 'rxjs';
 export class ProfileComponent {
   user: User | null = null;
   isEditing = false;
-  isEditingChange$ = new BehaviorSubject(false);
-  editprofileChange = this.isEditingChange$.asObservable();
   // Signal Save
   save$ = new BehaviorSubject(false);
   saved = this.save$.asObservable();
@@ -100,9 +98,6 @@ export class ProfileComponent {
       }
     this.saved.subscribe((value) => {
       console.log("SAVED IN FATHER");
-    });
-    this.editprofileChange.subscribe((value) => {
-      this.isEditing = value;
     });
   }
 
