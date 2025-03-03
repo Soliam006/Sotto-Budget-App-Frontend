@@ -70,3 +70,10 @@
 .sidebar.collapsed .user-info {
   display: none; /* Oculta la información del usuario cuando está colapsado */
 }
+
+.tab span {
+  font-size: 0.875rem; /* text-sm */
+}
+.drop{
+  font-size: 0.875rem;
+}

@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <!--<div [ngClass]="{ 'hidden': !sidebarOpen,'block': sidebarOpen, 'slide-in': sidebarOpen}"-->
 @defer{
-<div class="h-full w-20 md:w-24 lg:w-64 bg-gray-900 text-white flex flex-col p-4 overflow-y-auto fixed
+<div class="h-full w-16 md:w-20 lg:w-40 bg-gray-900 text-white flex flex-col p-4 overflow-y-auto fixed
   relative lg:block z-30 transition-all duration-300 ease-in-out" [class.collapsed]="!sidebarOpen">
 
   <img src="sb_logo.png" alt="Logo" class="w-full h-20 rounded-full mx-auto mb-6 lg:block hidden">
@@ -73,16 +73,16 @@
         <a routerLink="profile" routerLinkActive="active"
            class="flex items-center p-3 hover:bg-gray-700 transition">
           <mat-icon class="lg:mr-3">person</mat-icon>
-          <span class="lg:block hidden">Perfil</span>
+          <span class="lg:block hidden drop">Perfil</span>
         </a>
         <a routerLink="notifications" routerLinkActive="active"
            class="flex items-center p-3 hover:bg-gray-700 transition">
           <mat-icon class="lg:mr-3">notifications</mat-icon>
-          <span class="lg:block hidden">Notificaciones</span>
+          <span class="lg:block hidden drop">Notificaciones</span>
         </a>
         <button (click)="logout()" class="flex items-center p-3 w-full hover:bg-red-600 transition text-red-400">
           <mat-icon class="lg:mr-3">logout</mat-icon>
-          <span class="lg:block hidden">Cerrar sesión</span>
+          <span class="lg:block hidden drop">Cerrar sesión</span>
         </button>
       </div>
     </div>
