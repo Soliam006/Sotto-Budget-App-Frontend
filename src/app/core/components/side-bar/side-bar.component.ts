@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
-import {UserServiceService} from '../../../shared/services/user-service/user-service.service';
+import {UserService} from '../../../shared/services/user-service/user.service';
 import {AuthService} from '../../../shared/services/auth-service/auth-service.service';
 import {User} from '../../../shared/models/user';
 import {RouterLink, RouterLinkActive} from '@angular/router';
@@ -21,7 +21,7 @@ export class SideBarComponent {
   user: User | null = null;
   sidebarOpen = false;
   dropdownOpen = false;
-  constructor(private userService: UserServiceService,
+  constructor(private userService: UserService,
               private auth: AuthService,
               private eRef: ElementRef
   ) {

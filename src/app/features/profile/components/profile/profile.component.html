@@ -1,98 +1,164 @@
-<div class="flex-1 pt-6 h-screen w-full overflow-hidden flex flex-col bg-gray-900 text-white">
-  <div class="flex items-center justify-between px-4">
-    <h2 class="dir-title text-white">Configuración</h2>
+<!-- Contenedor raíz que ocupa todo el alto de la ventana -->
+<div class="flex flex-col h-screen bg-gray-950 text-white">
+
+  <!-- Encabezado o barra superior -->
+  <div class="pt-6 lg:p-6 px-4 flex items-center justify-between">
+    <h2 class="dir-title text-white">Perfil</h2>
   </div>
-  <div class="w-full p-4 flex-1 overflow-auto" *ngIf="!isEditing">
-    <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col gap-4">
-      <div class="flex flex-col lg:flex-row items-center gap-4">
-        <img src="/favicon.ico" alt="Avatar"
-             class="w-26 h-26 bg-gray-700 rounded-full flex items-center justify-center">
-        <div>
-          <div class="flex items-center gap-2">
-            <h2 class="text-xl lg:text-2xl font-bold">{{ user?.username || 'Usuario' }}</h2>
-            <span class="text-blue-400 bg-blue-700 hover:bg-blue-600 text-xs px-2 py-1 rounded-lg">{{ getRole(user?.role) }}</span>
-          </div>
-          <p class="mt-2 text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <div class="mt-4 flex gap-4">
-            <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 cursor-pointer" (click)="changeEditing()">
-              Editar Perfil
-            </button>
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 cursor-pointer">
-              Límite de Presupuesto
-            </button>
+
+  <!-- Contenedor para el contenido, con scroll si sobrepasa la pantalla -->
+  <div class="flex-1 flex flex-col bg-gray-950 pb-30">
+    <!-- Sección (opcional) que depende de isEditing -->
+    <div class="w-full p-4" *ngIf="!isEditing">
+      <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col gap-4">
+        <div class="flex flex-col lg:flex-row items-center gap-4">
+          <img
+            src="/favicon.ico"
+            alt="Avatar"
+            class="w-26 h-26 bg-gray-700 rounded-full flex items-center justify-center"
+          >
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-xl lg:text-2xl font-bold">{{ user?.username || 'Usuario' }}</h2>
+              <span
+                class="text-blue-400 bg-blue-700 hover:bg-blue-600 text-xs px-2 py-1 rounded-lg"
+              >
+                {{ getRole(user?.role) }}
+              </span>
+            </div>
+            <p class="mt-2 text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <div class="mt-4 flex gap-4">
+              <button
+                class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 cursor-pointer"
+                (click)="changeEditing()"
+              >
+                Editar Perfil
+              </button>
+              <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 cursor-pointer">
+                Límite de Presupuesto
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  @if (isEditing){
-  <div class="w-full p-4 flex-1 overflow-auto">
-    <profile-edit-section [dateRanges]="dateRanges" [range]="range" [user]="user"
-                          [save]="save$" (cancel)="changeEditing()"></profile-edit-section>
-  </div>
-  }
-  <mat-tab-group class="w-full flex-1 min-h-0" mat-align-tabs="center">
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon text-white" style="color:white;">notifications</mat-icon>
-        <div class="tab-principal md:block hidden text-white">Notificaciones</div>
-      </ng-template>
-      <div class="w-full h-full p-4 overflow-auto">
-        <div class="bg-gray-800 p-4 rounded-lg">
-          <mat-card-header>
-            <mat-card-title>Notificaciones</mat-card-title>
-            <mat-card-subtitle>
-              Tienes {{ getNotReaded() }} notificaciones sin leer
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content class="space-y-4">
-            <div *ngFor="let notification of notifications" class="flex items-start gap-4 p-4 rounded-lg"
-                 [ngClass]="{'bg-gray-700': !notification.read}">
-              <mat-icon>notifications</mat-icon>
-              <div class="flex-1 space-y-1">
-                <p class="font-medium leading-none">{{ notification.title }}</p>
-                <p class="text-sm text-gray-400">{{ notification.description }}</p>
-                <p class="text-xs text-gray-500">{{ notification.time }}</p>
+
+    <!-- Sección de edición -->
+    <div class="w-full p-4" *ngIf="isEditing">
+      <profile-edit-section
+        [dateRanges]="dateRanges"
+        [range]="range"
+        [user]="user"
+        [save]="save$"
+        (cancel)="changeEditing()"
+      ></profile-edit-section>
+    </div>
+
+    <!-- Grupo de tabs -->
+    <mat-tab-group mat-align-tabs="start">
+      <!-- Tab Notificaciones -->
+      <mat-tab label="label">
+        <ng-template mat-tab-label>
+          <mat-icon style="color:white;">notifications</mat-icon>
+          <div class="tab-principal md:block hidden hover:text-blue text-white">Notificaciones</div>
+        </ng-template>
+        <div class="w-full h-full p-4 overflow-auto">
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <mat-card-header>
+              <mat-card-title>Notificaciones</mat-card-title>
+              <mat-card-subtitle>
+                Tienes {{ getNotReaded() }} notificaciones sin leer
+              </mat-card-subtitle>
+            </mat-card-header><mat-card class="bg-gray-900 text-gray-100">
+            <!--
+              * Clase grid-cols-1: 1 columna en pantallas muy pequeñas
+              * sm:grid-cols-2: 2 columnas en pantallas >= 640px
+              * lg:grid-cols-3: 3 columnas en pantallas >= 1024px
+              * gap-4: espaciado entre columnas y filas
+              * p-4: padding general en el contenido
+             -->
+            <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+              <div
+                *ngFor="let notification of notifications"
+                class="flex items-start gap-4 p-4 rounded-lg"
+                [ngClass]="{
+        'bg-gray-800': notification.read,
+        'bg-gray-700': !notification.read
+      }"
+              >
+                <mat-icon>notifications</mat-icon>
+                <div class="flex-1 space-y-1">
+                  <p class="font-medium leading-none">
+                    {{ notification.title }}
+                  </p>
+                  <p class="text-sm text-gray-400">
+                    {{ notification.description }}
+                  </p>
+                  <p class="text-xs text-gray-500">
+                    {{ notification.time }}
+                  </p>
+                </div>
+                <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
               </div>
-              <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
-            </div>
-          </mat-card-content>
+            </mat-card-content>
+          </mat-card>
+
+          </div>
         </div>
-      </div>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon text-white" style="color:white;">event</mat-icon>
-        <div class="tab-principal md:block hidden text-white">Actividad</div>
-      </ng-template>
-      <div class="w-full h-full p-4 overflow-auto">
-        <mat-card class="h-full bg-gray-800 p-4 rounded-lg">
-          <mat-card-header>
-            <mat-card-title>Actividad Reciente</mat-card-title>
-            <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content class="space-y-4">
-            <div *ngFor="let activity of activities" class="flex items-start gap-4 p-4">
-              <mat-icon>event</mat-icon>
-              <div class="flex-1 space-y-1">
-                <p class="font-medium leading-none">{{ activity.action }}</p>
-                <p class="text-sm text-gray-400">{{ activity.description }}</p>
-                <p class="text-xs text-gray-500">{{ activity.time }}</p>
-              </div>
-            </div>
-            <div class="project-container">
-              <h2>Proyectos Actuales</h2>
-              <div *ngFor="let project of projects" class="bg-gray-700 p-2 rounded-lg">
-                <p>{{ project.name }} <span>{{ project.budget | currency }}</span></p>
-                <div class="progress-bar bg-gray-600 rounded-lg overflow-hidden">
-                  <div class="progress bg-blue-500 h-2" [style.width.%]="(project.spent / project.budget) * 100"></div>
+      </mat-tab>
+
+      <!-- Tab Actividad -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon text-white" style="color:white;">event</mat-icon>
+          <div class="tab-principal md:block hidden text-white">Actividad</div>
+        </ng-template>
+        <div class="w-full h-full p-4 overflow-auto">
+          <mat-card class="h-full bg-gray-800 p-4 rounded-lg">
+            <mat-card-header>
+              <mat-card-title>Actividad Reciente</mat-card-title>
+              <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="space-y-4">
+              <div
+                *ngFor="let activity of activities"
+                class="flex items-start gap-4 p-4"
+              >
+                <mat-icon>event</mat-icon>
+                <div class="flex-1 space-y-1">
+                  <p class="font-medium leading-none">{{ activity.action }}</p>
+                  <p class="text-sm text-gray-400">{{ activity.description }}</p>
+                  <p class="text-xs text-gray-500">{{ activity.time }}</p>
                 </div>
               </div>
-              <a routerLink="../dashboard" routerLinkActive="active" class="btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 cursor-pointer mt-4">Ver Todos</a>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+              <div class="project-container">
+                <h2>Proyectos Actuales</h2>
+                <div *ngFor="let project of projects" class="bg-gray-700 p-2 rounded-lg">
+                  <p>
+                    {{ project.name }}
+                    <span>{{ project.budget | currency }}</span>
+                  </p>
+                  <div class="progress-bar bg-gray-600 rounded-lg overflow-hidden">
+                    <div
+                      class="progress bg-blue-500 h-2"
+                      [style.width.%]="(project.spent / project.budget) * 100"
+                    ></div>
+                  </div>
+                </div>
+                <a
+                  routerLink="../dashboard"
+                  routerLinkActive="active"
+                  class="btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 cursor-pointer mt-4"
+                >
+                  Ver Todos
+                </a>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
 </div>

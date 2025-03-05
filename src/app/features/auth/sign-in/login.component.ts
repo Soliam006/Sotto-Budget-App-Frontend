@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 import {AuthValidators} from '../../../shared/validators/auth-validators';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth-service/auth-service.service';
+import {NotifyService} from '../../../shared/services/notify-service/notify-service.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent {
               private fb: FormBuilder,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private router: Router
+              private router: Router,
   ) {
     this.loginForm = this.fb.group({
       username: ['', AuthValidators.emailOrUsername()],
@@ -66,17 +67,6 @@ export class LoginComponent {
       ? this.authService.get_access_token_with_email({username, password})
       : this.authService.get_access_token_with_username({username, password});
 
-    authRequest.subscribe({
-      next: response => {
-        console.log('Respuesta del servidor', response);
-        if (rememberMe) {
-          localStorage.setItem('token', response.access_token);
-        }
-        this.router.navigate(['/sottobudget']);
-      },
-      error: error => {
-        console.error('Error en la petición', error);
-      }
-    });
+    authRequest;
   }
 }

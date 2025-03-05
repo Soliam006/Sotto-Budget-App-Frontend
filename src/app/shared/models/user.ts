@@ -6,4 +6,7 @@ export interface User {
   role?: string;
   id?: number;
   avatar?: string;
+  client_id?: number;
+  admin_id?: number;
+  worker_id?: number;
 }

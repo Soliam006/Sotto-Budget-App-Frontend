@@ -3,6 +3,10 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 //Environment
 import { environment } from '../../../../environments/environment';
+import {Router} from '@angular/router';
+import {NotifyService} from '../notify-service/notify-service.service';
+import {Response} from '../../models/response';
+import {UserService} from '../user-service/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,34 +17,63 @@ export class AuthService {
   private apiUrl = environment.apiUrl + '/users';
   private expireToken: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router,
+              private notify: NotifyService,
+              private userService: UserService) { }
 
   /**
    * Realiza el login enviando las credenciales al backend.
    * @param credentials Objeto con email y password.
    * @returns Un observable con la respuesta del servidor.
    */
-  get_access_token_with_email(credentials: { username: string, password: string }): Observable<any> {
+  get_access_token_with_email(credentials: { username: string, password: string }) {
     const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
 
-    const url = `${this.apiUrl}/token_email?email=${credentials.username}&password=${credentials.password}`;
-
-    return this.http.post(url, {}, { headers });
+    this.http.post(`${this.apiUrl}/token_email`, credentials, { headers }).
+    subscribe({
+      next: response => {
+        this.validateResponse(response as Response);
+      },
+      error: error => {
+        this.notify.error('Error en la petición', "Something went Wrong");
+        console.error('Error en la petición', error);
+      }
+    });
   }
 
-  get_access_token_with_username(credentials: { username: string, password: string }): Observable<any> {
+  get_access_token_with_username(credentials: { username: string, password: string }){
 
-    const body = new HttpParams()
-      .set('username', credentials.username)
-      .set('password', credentials.password);
     const   headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'accept': 'application/json',
     });
 
-    return this.http.post(`${this.apiUrl}/token`, body, { headers: headers });
+    this.http.post(`${this.apiUrl}/token_username`, credentials, { headers }).subscribe({
+      next: response => {
+        this.validateResponse(response as Response);
+      },
+      error: error => {
+        this.notify.error('Error en la petición', "Something went Wrong");
+        console.error('Error en la petición', error);
+      }
+    });
+  }
+
+  validateResponse(response: Response){
+    console.log('Respuesta del servidor', response);
+    if(response.statusCode == 401){
+      this.notify.error('Could not validate Credentials', response.message);
+    }
+    else if(response.statusCode == 200){
+      this.notify.success('Success', response.message);
+      localStorage.setItem('token', response.data.access_token);
+      this.userService.setUser(response.data.user);
+      this.router.navigate(['/sottobudget']);
+    }
   }
 
   /**

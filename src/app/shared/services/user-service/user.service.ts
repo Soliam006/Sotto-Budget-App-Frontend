@@ -5,7 +5,7 @@ import { User } from '../../models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
+export class UserService {
 
   // Listener for user changes
   user$ = new BehaviorSubject<User |null>(null);

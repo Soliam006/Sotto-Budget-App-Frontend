@@ -5,7 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
-import {UserServiceService} from '../../../../shared/services/user-service/user-service.service';
+import {UserService} from '../../../../shared/services/user-service/user.service';
 import {User} from '../../../../shared/models/user';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
@@ -84,7 +84,7 @@ export class ProfileComponent {
   ];
 
   constructor(
-    private userService: UserServiceService,
+    private userService: UserService,
     private dialog: MatDialog
   ) {
     this.user = this.userService.getUser();
