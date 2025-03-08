@@ -1,8 +1,3 @@
-
-.home mat-icon{
-  color: #499dda;
-}
-
 .active .info{
   font-weight: bold;
   display: block;
@@ -24,19 +19,23 @@
 }
 
 
-.tasks mat-icon{
+.active .home mat-icon{
+  color: #499dda;
+}
+
+.active .tasks mat-icon{
   color: #962fec;
 }
-.calendar mat-icon{
+.active .calendar mat-icon{
   color: #d9208f;
 }
-.materials mat-icon{
+.active .materials mat-icon{
   color: #e1521d;
 }
-.team mat-icon{
+.active .team mat-icon{
   color: #66cc99;
 }
-.reports mat-icon{
+.active .reports mat-icon{
   color: #177509;
 }
 .profile mat-icon{

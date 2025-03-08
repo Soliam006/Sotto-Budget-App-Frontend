@@ -1,25 +1,25 @@
 @defer {
-<nav class="fixed bottom-0 w-full bg-gray-900 text-white flex justify-around z-9999">
+<nav class="fixed bottom-0 w-full bg-gray-900 text-white py-4 flex justify-around z-9999">
   <!-- Dashboard -->
-  <a routerLink="dashboard" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+  <a routerLink="dashboard" routerLinkActive="active" class="flex flex-col items-center transition">
     <div class="home"><mat-icon>home</mat-icon> </div>
-    <span class="text-xs text-white info info-home hidden">Dashboard</span>
+    <span class="absolute bottom-1 text-xs text-white info info-home hidden">Dashboard</span>
   </a>
 
   <!-- Tareas -->
-  <a routerLink="tasks" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+  <a routerLink="tasks" routerLinkActive="active" class="flex flex-col items-center transition">
     <div class="tasks"><mat-icon>assignment</mat-icon></div>
     <span class="text-xs text-white info info-task hidden">Tasks</span>
   </a>
 
   <!-- Calendario -->
-  <a routerLink="calendar" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+  <a routerLink="calendar" routerLinkActive="active" class="flex flex-col items-center transition">
     <div class="calendar"><mat-icon>calendar_today</mat-icon></div>
     <span class="text-xs text-white info info-cal hidden">Calendario</span>
   </a>
 
   <!-- Materiales -->
-  <a routerLink="materials" routerLinkActive="active" class="flex flex-col items-center p-2 transition">
+  <a routerLink="materials" routerLinkActive="active" class="flex flex-col items-center transition">
     <div class="materials"><mat-icon>inventory_2</mat-icon></div>
     <span class="text-xs text-white info info-mal hidden">Materiales</span>
   </a>
@@ -27,7 +27,7 @@
   <!-- Perfil con dropdown -->
   <div class="relative">
     <button (click)="toggleDropdown()"
-            class="flex flex-col items-center p-2 transition cursor-pointer">
+            class="flex flex-col items-center transition cursor-pointer">
       <mat-icon>person</mat-icon>
     </button>
 

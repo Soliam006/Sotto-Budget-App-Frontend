@@ -14,6 +14,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ProfileEditSectionComponent} from '../profile-edit-section/profile-edit-section.component';
 import {BehaviorSubject} from 'rxjs';
+import { FollowDialogComponent } from '../follow-dialog/follow-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -154,6 +155,69 @@ export class ProfileComponent {
     if (!role) return 'No definido';
     return role === 'admin' ? 'Project Manager' : role === 'client' ? 'Cliente' : 'Trabajador';
   }
+  
+  activeTab: string = 'notifications';
 
+  userData = {
+    name: 'Blas Sotto',
+    role: 'Project Manager',
+    avatar: '/placeholder.svg',
+    stats: {
+      projects: 12,
+      followers: 28,
+      following: 34,
+      requests: 5,
+    },
+    notifications: [
+      {
+        id: 1,
+        title: 'Nueva tarea asignada',
+        description: 'Se te ha asignado la tarea "Diseño de planos"',
+        time: 'Hace 2 horas',
+        isNew: true,
+      },
+      {
+        id: 2,
+        title: 'Nuevo seguidor',
+        description: 'Carlos Méndez ha comenzado a seguirte',
+        time: 'Hace 5 horas',
+        isNew: false,
+      },
+    ],
+    following: [
+      { id: 1, name: 'Ana García', role: 'Arquitecta', avatar: '/favicon.ico' },
+      { id: 2, name: 'Miguel López', role: 'Diseñador', avatar: '/favicon.ico' },
+      { id: 3, name: 'Laura Sánchez', role: 'Ingeniera', avatar: '/favicon.ico' },
+    ],
+    followers: [
+      { id: 1, name: 'Carlos Méndez', role: 'Constructor', avatar: '/favicon.ico' },
+      { id: 2, name: 'Elena Ruiz', role: 'Contratista', avatar: '/favicon.ico' },
+    ],
+    requests: [
+      { id: 1, name: 'Javier Martínez', role: 'Electricista', avatar: '/favicon.ico' },
+      { id: 2, name: 'Sofía Rodríguez', role: 'Decoradora', avatar: '/favicon.ico' },
+      { id: 3, name: 'Pablo Hernández', role: 'Fontanero', avatar: '/favicon.ico' },
+    ],
+  };
+
+  handleAcceptRequest(id: number) {
+    console.log(`Solicitud ${id} aceptada`);
+  }
+
+  handleRejectRequest(id: number) {
+    console.log(`Solicitud ${id} rechazada`);
+  }
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+  getNotReadedNew() {
+    return this.userData.notifications.filter(n => n.isNew).length
+  }
+  openDialog(type: 'followers' | 'following') {
+    this.dialog.open(FollowDialogComponent, {
+      data: { list: type === 'followers' ? this.userData.followers : this.userData.following, title: type === 'followers' ? 'Seguidores' : 'Siguiendo' },
+    });
+  }
 
 }

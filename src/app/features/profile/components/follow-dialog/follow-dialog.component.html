@@ -1,0 +1,18 @@
+<mat-dialog-content class="bg-gray-900 text-white p-6 rounded-lg" style="width: 50vw;">
+    <h2 class="text-2xl font-bold mb-4">{{ data.title }}</h2>
+  
+    <div class="grid grid-cols-1 gap-2">
+      <div *ngFor="let user of data.list" class="flex items-center p-3 bg-gray-800 rounded-lg">
+        <img [src]="user.avatar" class="h-10 w-10 rounded-full" />
+        <div class="ml-4">
+          <p class="md:text-xl font-medium">{{ user.name }}</p>
+          <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-6 text-right">
+      <button mat-button (click)="closeDialog()" class="cursor-pointer text-blue-400 hover:text-blue-500">Cerrar</button>
+    </div>
+  </mat-dialog-content>
+  
