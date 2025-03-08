@@ -9,15 +9,15 @@
   <!-- Contenedor para el contenido, con scroll si sobrepasa la pantalla -->
   <div class="flex-1 flex flex-col bg-gray-950 pb-30">
     <!-- Sección (opcional) que depende de isEditing -->
-    <div class="w-full p-4" *ngIf="!isEditing">
-      <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col md:gap-4">
+    <div class="w-full p-2" *ngIf="!isEditing">
+      <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col md:gap-4 border-1 border-gray-600">
         <div class="flex flex-col lg:flex-row items-center gap-1 md:gap-4">
           <img
             src="/favicon.ico"
             alt="Avatar"
             class="w-26 h-26 bg-gray-700 rounded-full flex items-center justify-center"
           >
-          <div>
+          <div class="w-full">
             <div class="flex flex-col md:flex-row items-center md:gap-2">
               <h2 class="text-xl lg:text-2xl font-medium">{{ user?.username || 'Usuario' }}</h2>
               <span
@@ -26,15 +26,21 @@
                 {{ getRole(user?.role) }}
               </span>
             </div>
-            <div class="mt-4 flex flex-col md:flex-row gap-4">
+            <div class="mt-4 flex flex-col md:flex-row gap-1">
               <button
-                class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 cursor-pointer"
+                class="w-full bg-gray-600 text-white px-2 py-1 rounded-lg hover:bg-gray-500 cursor-pointer"
                 (click)="changeEditing()"
               >
-                Editar Perfil
+                <div class="flex gap-1 items-center justify-center">
+                  <mat-icon>edit</mat-icon>
+                  <p class="pt-1">Editar Perfil</p>
+                </div>
               </button>
-              <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 cursor-pointer">
-                Límite de Presupuesto
+              <button class="w-full bg-blue-700 text-white px-2 py-1 rounded-lg hover:bg-blue-500 cursor-pointer">
+                <div class="flex gap-1 items-center justify-center">
+                  <mat-icon>attach_money</mat-icon>
+                  <p class="pt-1">Límite de Presupuesto</p>
+                </div>
               </button>
             </div>
           </div>
@@ -62,24 +68,17 @@
           <div class="tab-principal md:block hidden hover:text-blue text-white">Notificaciones</div>
         </ng-template>
         <div class="w-full h-full p-4 overflow-auto">
-          <div class="bg-gray-800 p-4 rounded-lg">
-            <mat-card-header class="mb-2">
-              <mat-card-title>Notificaciones</mat-card-title>
-              <mat-card-subtitle class="text-gray-400">
+          <div class="bg-gray-800 rounded-lg border-1 border-gray-600">
+            <div class="p-6">
+              <h3 class="text-white text-xl md:text-2xl">Notificaciones</h3>
+              <p class="text-gray-400">
                 Tienes {{ getNotReaded() }} notificaciones sin leer
-              </mat-card-subtitle>
-            </mat-card-header><mat-card class="bg-gray-900 text-gray-100">
-            <!--
-              * Clase grid-cols-1: 1 columna en pantallas muy pequeñas
-              * sm:grid-cols-2: 2 columnas en pantallas >= 640px
-              * lg:grid-cols-3: 3 columnas en pantallas >= 1024px
-              * gap-4: espaciado entre columnas y filas
-              * p-4: padding general en el contenido
-             -->
-             <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-y-6">
+              </p>
+            </div>
+             <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-y-4">
               <div
                 *ngFor="let notification of notifications"
-                class="flex items-start mb-4 p-6 rounded-lg"
+                class="flex items-start mx-1 md:mb-4 p-6 rounded-lg"
                 [ngClass]="{
                   'bg-gray-800': notification.read,
                   'bg-gray-700': !notification.read
@@ -100,9 +99,6 @@
                 <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
               </div>
             </mat-card-content>
-            
-          </mat-card>
-
           </div>
         </div>
       </mat-tab>
@@ -114,7 +110,7 @@
           <div class="tab-principal md:block hidden text-white">Actividad</div>
         </ng-template>
         <div class="w-full h-full p-4 overflow-auto">
-          <mat-card class="h-full bg-gray-800 p-4 rounded-lg">
+          <div class="bg-gray-800 p-4 rounded-lg border-1 border-gray-600">
             <mat-card-header>
               <mat-card-title>Actividad Reciente</mat-card-title>
               <mat-card-subtitle>Tu actividad en los últimos 7 días</mat-card-subtitle>
@@ -154,7 +150,7 @@
                 </a>
               </div>
             </mat-card-content>
-          </mat-card>
+        </div>
         </div>
       </mat-tab>
 

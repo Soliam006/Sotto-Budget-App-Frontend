@@ -2,17 +2,17 @@
   <app-side-bar class="hidden md:block"></app-side-bar>
   <!-- Contenido -->
   <div class="flex-1 overflow-y-auto">
-    <main class="h-full">
+    <main class="h-screen">
       <header class="bg-gray-800 text-white p-4 md:hidden fixed w-full z-40">
         <div class="flex items-center justify-between">
           <img src="favicon.ico" alt="Logo" class="w-10 h-10 rounded-full">
           <h1 class="text-xl font-semibold">Sotto Budget</h1>
         </div>
       </header>
-      <div class="pt-16 pb-14 md:pt-0 md:p-0 md:pb-0">
+      <div class="pt-16 pb-8 md:pt-0 md:p-0 md:pb-0">
         <router-outlet></router-outlet>
       </div>
-      <app-bottom-bar class="md:hidden block"></app-bottom-bar>
+      <app-bottom-bar class="md:hidden block bottom-0"></app-bottom-bar>
     </main>
   </div>
 </div>
