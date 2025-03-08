@@ -26,7 +26,6 @@
                 {{ getRole(user?.role) }}
               </span>
             </div>
-            <p class="mt-2 text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             <div class="mt-4 flex flex-col md:flex-row gap-4">
               <button
                 class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 cursor-pointer"
@@ -64,9 +63,9 @@
         </ng-template>
         <div class="w-full h-full p-4 overflow-auto">
           <div class="bg-gray-800 p-4 rounded-lg">
-            <mat-card-header>
+            <mat-card-header class="mb-2">
               <mat-card-title>Notificaciones</mat-card-title>
-              <mat-card-subtitle>
+              <mat-card-subtitle class="text-gray-400">
                 Tienes {{ getNotReaded() }} notificaciones sin leer
               </mat-card-subtitle>
             </mat-card-header><mat-card class="bg-gray-900 text-gray-100">
@@ -77,15 +76,15 @@
               * gap-4: espaciado entre columnas y filas
               * p-4: padding general en el contenido
              -->
-            <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+             <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-y-6">
               <div
                 *ngFor="let notification of notifications"
-                class="flex items-start justify-between p-4 rounded-lg"
+                class="flex items-start mb-4 p-6 rounded-lg"
                 [ngClass]="{
-        'bg-gray-800': notification.read,
-        'bg-gray-700': !notification.read
-      }"
-              >
+                  'bg-gray-800': notification.read,
+                  'bg-gray-700': !notification.read
+                }">
+            
                 <mat-icon>notifications</mat-icon>
                 <div class="flex-1 gap-1">
                   <p class="font-medium leading-none">
@@ -101,6 +100,7 @@
                 <span matBadge="Nueva" matBadgeColor="primary" *ngIf="!notification.read"></span>
               </div>
             </mat-card-content>
+            
           </mat-card>
 
           </div>
