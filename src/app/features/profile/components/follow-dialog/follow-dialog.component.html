@@ -1,18 +1,37 @@
-<mat-dialog-content class="bg-gray-900 text-white p-6 rounded-lg" style="width: 50vw;">
-    <h2 class="text-2xl font-bold mb-4">{{ data.title }}</h2>
-  
-    <div class="grid grid-cols-1 gap-2">
-      <div *ngFor="let user of data.list" class="flex items-center p-3 bg-gray-800 rounded-lg">
+<mat-dialog-content class="bg-gray-900 text-white p-4 rounded-lg w-96 overflow-hidden">
+  <h2 class="text-xl font-bold text-center mb-2">{{ data.title }}</h2>
+
+  <!-- Barra de búsqueda -->
+  <div class="flex items-center bg-gray-800 p-2 rounded-lg mb-2">
+    <mat-icon class="text-gray-400">search</mat-icon>
+    <input
+      [(ngModel)]="searchTerm"
+      placeholder="Busca"
+      class="bg-transparent outline-none text-white ml-2 w-full"
+      type="text"
+    />
+  </div>
+
+  <!-- Contenedor con scroll SOLO para la lista -->
+  <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
+    <div *ngFor="let user of filteredList()" class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+      <div class="flex items-center">
         <img [src]="user.avatar" class="h-10 w-10 rounded-full" />
         <div class="ml-4">
-          <p class="md:text-xl font-medium">{{ user.name }}</p>
-          <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+          <p class="text-base font-medium text-white">{{ user.name }}</p>
+          <p class="text-xs text-gray-300 italic">{{ user.username }}</p>
+          <p class="text-xs text-gray-400">{{ user.role }}</p>
         </div>
       </div>
+      <button *ngIf="user.canFollow; else removeButton" class="text-blue-400 text-sm font-bold">Seguir</button>
+      <ng-template #removeButton>
+        <button class="bg-gray-700 text-white px-3 py-1 rounded-md text-sm">Suprimir</button>
+      </ng-template>
     </div>
-  
-    <div class="mt-6 text-right">
-      <button mat-button (click)="closeDialog()" class="cursor-pointer text-blue-400 hover:text-blue-500">Cerrar</button>
-    </div>
-  </mat-dialog-content>
-  
+  </div>
+
+  <!-- Botón de cierre -->
+  <div class="mt-4 text-right">
+    <button mat-button (click)="closeDialog()" class="text-blue-400 hover:text-blue-500">Cerrar</button>
+  </div>
+</mat-dialog-content>

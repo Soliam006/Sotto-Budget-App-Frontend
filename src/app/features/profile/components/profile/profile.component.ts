@@ -155,7 +155,7 @@ export class ProfileComponent {
     if (!role) return 'No definido';
     return role === 'admin' ? 'Project Manager' : role === 'client' ? 'Cliente' : 'Trabajador';
   }
-  
+
   activeTab: string = 'notifications';
 
   userData = {
@@ -185,18 +185,22 @@ export class ProfileComponent {
       },
     ],
     following: [
-      { id: 1, name: 'Ana García', role: 'Arquitecta', avatar: '/favicon.ico' },
-      { id: 2, name: 'Miguel López', role: 'Diseñador', avatar: '/favicon.ico' },
-      { id: 3, name: 'Laura Sánchez', role: 'Ingeniera', avatar: '/favicon.ico' },
+      { id: 1, name: 'Ana García', role: 'Worker', avatar: '/favicon.ico', username: 'ana.garcia' },
+      { id: 2, name: 'Miguel López', role: 'Worker', avatar: '/favicon.ico', username: 'migueez' },
+      { id: 3, name: 'Laura Sánchez', role: 'Cliente', avatar: '/favicon.ico', username: 'laura.sanchez' },
+      { id: 4, name: 'Javier Martínez', role: 'Electricista', avatar: '/favicon.ico', username: 'javier.martinez' },
+      { id: 5, name: 'Sofía Rodríguez', role: 'Decoradora', avatar: '/favicon.ico', username: 'sofia.rodri' },
+      { id: 6, name: 'Pablo Hernández', role: 'Worker', avatar: '/favicon.ico', username: 'pablo.herz' },
+      { id: 7, name: 'Elena Ruiz', role: 'Admin', avatar: '/favicon.ico', username: 'elena.rz' },
     ],
     followers: [
-      { id: 1, name: 'Carlos Méndez', role: 'Constructor', avatar: '/favicon.ico' },
-      { id: 2, name: 'Elena Ruiz', role: 'Contratista', avatar: '/favicon.ico' },
+      { id: 1, name: 'Carlos Méndez', role: 'Constructor', avatar: '/favicon.ico', username: 'car.Mendez' },
+      { id: 2, name: 'Elena Ruiz', role: 'Contratista', avatar: '/favicon.ico', username: 'elena.rz' },
     ],
     requests: [
-      { id: 1, name: 'Javier Martínez', role: 'Electricista', avatar: '/favicon.ico' },
-      { id: 2, name: 'Sofía Rodríguez', role: 'Decoradora', avatar: '/favicon.ico' },
-      { id: 3, name: 'Pablo Hernández', role: 'Fontanero', avatar: '/favicon.ico' },
+      { id: 1, name: 'Javier Martínez', role: 'Electricista', avatar: '/favicon.ico', username: 'javier.martinez' },
+      { id: 2, name: 'Sofía Rodríguez', role: 'Decoradora', avatar: '/favicon.ico', username: 'sofia.rodri' },
+      { id: 3, name: 'Pablo Hernández', role: 'Fontanero', avatar: '/favicon.ico', username: 'pablo.herz' },
     ],
   };
 

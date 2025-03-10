@@ -11,48 +11,51 @@
     <!-- Sección (opcional) que depende de isEditing -->
     <div class="w-full p-2" *ngIf="!isEditing">
       <div class="p-8 bg-gray-800 text-white rounded-lg flex flex-col md:gap-4 border-1 border-gray-600">
-        <div class="flex flex-row items-center gap-1">
+        <div class="flex flex-row gap-3 items-center justify-around">
           <img
             src="/favicon.ico"
             alt="Avatar"
-            class="w-26 h-26 bg-gray-700 rounded-full flex items-center justify-center"
+            class="w-14 h-14 md:w-26 md:h-26 bg-gray-700 rounded-full flex items-center"
           >
-          <div class="w-full">
-            <div class="flex flex-col items-center md:gap-1">
-              <div class="flex flex-col md:flex-row items-center md:gap-2">
-                <h2 class="text-xl md:text-2xl font-medium">{{ user?.username || 'Usuario' }}</h2>
+          <div class="w-full flex-col">
+            <div class="flex flex-col">
+              <div class="flex flex-row items-center">
+                <h2 class="text-md md:text-xl lg:text-2xl font-medium">{{ user?.username || 'Usuario' }}</h2>
                 <span
-                  class="ml-1 text-blue-200 bg-blue-700 hover:bg-blue-600 text-xs px-2 rounded-lg"
+                  class="text-xs ml-1 text-blue-200 bg-blue-700 hover:bg-blue-600 px-2 rounded-lg"
                 >
                   {{ getRole(user?.role) }}
                 </span>
               </div>
-              <p class="text-sm font-medium text-center md:text-left">&#64;blasotto</p>
+              <p class="text-xs md:text-md font-medium text-center md:text-left italic">blasotto</p>
             </div>
-            <div class="flex justify-center gap-6 mt-4">
+            <div class="md:flex flex-row mt-4 gap-4 hidden ">
               <div class="flex flex-col items-center">
-                <span class="text-xl font-bold">{{ userData.stats.projects }}</span>
+                <span class="text-md lg:text-xl font-medium">{{ userData.stats.projects }}</span>
                 <span class="text-xs text-gray-400">Proyectos</span>
               </div>
-              <button (click)="openDialog('followers')" class="relative flex flex-col items-center cursor-pointer hover:text-sky-400">
-                <span class="text-xl font-bold">{{ userData.stats.followers }}</span>
+              <button (click)="openDialog('followers')"
+                      class="flex flex-col items-center cursor-pointer hover:text-sky-400">
+                <span class="text-md lg:text-xl font-medium">{{ userData.stats.followers }}</span>
                 <span class="text-xs text-gray-400">Seguidores</span>
               </button>
-              <button (click)="openDialog('following')" class="relative flex flex-col items-center cursor-pointer hover:text-sky-400">
-                <span class="text-xl font-bold">{{ userData.stats.following }}</span>
+              <button (click)="openDialog('following')"
+                      class="flex flex-col items-center cursor-pointer hover:text-sky-400">
+                <span class="text-md lg:text-xl font-medium">{{ userData.stats.following }}</span>
                 <span class="text-xs text-gray-400">Siguiendo</span>
               </button>
               <div class="relative flex flex-col items-center">
-                <span class="text-xl font-bold">{{ userData.stats.requests }}</span>
+                <span class="text-md lg:text-xl font-medium">{{ userData.stats.requests }}</span>
                 <span class="text-xs text-gray-400">Solicitudes</span>
-                <span *ngIf="userData.stats.requests > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                <span *ngIf="userData.stats.requests > 0"
+                      class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                   {{ userData.stats.requests }}
                 </span>
               </div>
             </div>
+            <p class="text-xs md:text-md text-center md:text-left mt-2">bsrolon&#64;example.com</p>
           </div>
         </div>
-        <p class="text-sm text-slate-300 text-center md:text-left mt-1">blas.sotto&#64;example.com</p>
         <div class="mt-4 flex flex-col md:flex-row gap-1">
           <button
             class="w-full bg-gray-600 text-white px-2 py-1 rounded-lg hover:bg-gray-500 cursor-pointer"
@@ -60,15 +63,96 @@
           >
             <div class="flex gap-1 items-center justify-center">
               <mat-icon>edit</mat-icon>
-              <p class="pt-1">Editar Perfil</p>
+              <p class="text-xs md:text-md pt-1">Editar Perfil</p>
             </div>
           </button>
           <button class="w-full bg-blue-700 text-white px-2 py-1 rounded-lg hover:bg-blue-500 cursor-pointer">
             <div class="flex gap-1 items-center justify-center">
               <mat-icon>attach_money</mat-icon>
-              <p class="pt-1">Límite de Presupuesto</p>
+              <p class="text-xs md:text-md pt-1">Límite de Presupuesto</p>
             </div>
           </button>
+        </div>
+        <div class="block md:hidden w-full">
+          <mat-tab-group class="mt-4 w-full bg-gray-600/30 rounded-lg">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <div class="flex flex-col items-center">
+                  <span class="text-md lg:text-xl font-medium text-gray-200">{{ userData.stats.projects }}</span>
+                  <span class="text-xs text-gray-400">Proyectos</span>
+                </div>
+              </ng-template>
+              <div class="p-4">
+                <h2 class="text-xl font-medium mb-4">Proyectos</h2>
+                <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
+                  <div *ngFor="let project of projects" class="p-3 bg-gray-800 rounded-lg mb-1">
+                    <p class="md:text-xl font-medium">{{ project.name }}</p>
+                    <p class="text-xs md:text-lg text-gray-400">{{ project.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <div class="flex flex-col items-center">
+                  <span class="text-md lg:text-xl font-medium text-gray-200">{{ userData.stats.followers }}</span>
+                  <span class="text-xs text-gray-400">Seguidores</span>
+                </div>
+              </ng-template>
+              <div class="p-4">
+                <h2 class="text-xl font-medium  mb-4">Seguidores</h2>
+                <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
+                  <div *ngFor="let user of userData.followers" class="flex items-center p-3 bg-gray-800 rounded-lg">
+                    <img [src]="user.avatar" class="h-10 w-10 rounded-full"/>
+                    <div class="ml-4">
+                      <p class="md:text-xl font-medium">{{ user.name }}</p>
+                      <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <div class="flex flex-col items-center">
+                  <span class="text-md lg:text-xl font-medium text-gray-200">{{ userData.stats.following }}</span>
+                  <span class="text-xs text-gray-400">Siguiendo</span>
+                </div>
+              </ng-template>
+              <div class="p-4">
+                <h2 class="text-xl font-medium mb-4">Siguiendo</h2>
+                <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
+                  <div *ngFor="let user of userData.following" class="flex items-center p-3 bg-gray-800 rounded-lg">
+                    <img [src]="user.avatar" class="h-10 w-10 rounded-full"/>
+                    <div class="ml-4">
+                      <p class="md:text-xl font-medium">{{ user.name }}</p>
+                      <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <div class="flex flex-col items-center">
+                  <span class="text-md lg:text-xl font-medium text-gray-200">{{ userData.stats.requests }}</span>
+                  <span class="text-xs text-gray-400">Solicitudes</span>
+                </div>
+              </ng-template>
+              <div class="p-4">
+                <h2 class="text-xl font-medium mb-4">Solicitudes</h2>
+                <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
+                  <div *ngFor="let user of userData.requests" class="flex items-center p-3 bg-gray-800 rounded-lg">
+                    <img [src]="user.avatar" class="h-10 w-10 rounded-full"/>
+                    <div class="ml-4">
+                      <p class="md:text-xl font-medium">{{ user.name }}</p>
+                      <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
         </div>
       </div>
     </div>
@@ -100,7 +184,7 @@
                 Tienes {{ getNotReaded() }} notificaciones sin leer
               </p>
             </div>
-             <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-y-4">
+            <mat-card-content class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-y-4">
               <div
                 *ngFor="let notification of notifications"
                 class="flex items-start mx-1 md:mb-4 p-6 rounded-lg"
@@ -108,7 +192,7 @@
                   'bg-gray-800': notification.read,
                   'bg-gray-700': !notification.read
                 }">
-            
+
                 <mat-icon>notifications</mat-icon>
                 <div class="flex-1 gap-1">
                   <p class="font-medium leading-none">
@@ -175,7 +259,7 @@
                 </a>
               </div>
             </mat-card-content>
-        </div>
+          </div>
         </div>
       </mat-tab>
 

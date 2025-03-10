@@ -86,3 +86,6 @@ p {
   background: #124ac5;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+}
