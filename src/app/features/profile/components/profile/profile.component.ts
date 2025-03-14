@@ -224,4 +224,23 @@ export class ProfileComponent {
     });
   }
 
+  acceptRequest(user: { role: string; name: string; id: number; avatar: string; username: string } | {
+    role: string;
+    name: string;
+    id: number;
+    avatar: string;
+    username: string
+  } | { role: string; name: string; id: number; avatar: string; username: string }) {
+    
+  }
+
+  rejectRequest(user: { role: string; name: string; id: number; avatar: string; username: string } | {
+    role: string;
+    name: string;
+    id: number;
+    avatar: string;
+    username: string
+  } | { role: string; name: string; id: number; avatar: string; username: string }) {
+    
+  }
 }

@@ -144,13 +144,30 @@
                 <div class="flex flex-col space-y-2" style="max-height: 300px; overflow-y: auto;">
                   <div *ngFor="let user of userData.requests" class="flex items-center p-3 bg-gray-800 rounded-lg mb-1">
                     <img [src]="user.avatar" class="h-10 w-10 rounded-full"/>
-                    <div class="ml-4">
+                    <div class="ml-4 flex-1">
                       <p class="md:text-xl font-medium">{{ user.name }}</p>
                       <p class="text-xs md:text-lg text-gray-400">{{ user.role }}</p>
+                    </div>
+                    <div class="flex gap-2">
+                      <button
+                        class="bg-green-500/70 text-white p-2 cursor-pointer rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-green-500"
+                        (click)="acceptRequest(user)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </button>
+                      <button
+                        class="bg-red-500/70 text-white p-2 cursor-pointer rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-red-500"
+                        (click)="rejectRequest(user)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
+
             </mat-tab>
           </mat-tab-group>
         </div>
